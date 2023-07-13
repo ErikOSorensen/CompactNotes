@@ -51,7 +51,7 @@ An \textbf{event} is a subset of $\calS$. Events are what we assign probability
 to.
 
 The set of possible events must be restricted to a $\mathbf{\sigma}$\textbf{-algebra} $\calA$,
-a class of subsets of $\calS$ such that if $A\in\calS$ then $A^c\in\calA$, if $A_1,A_2,\dots\in \calF$,
+a class of subsets of $\calS$ such that if $A\in\calS$ then $A^c\in\calA$, if $A_1,A_2,\dots\in \calA$,
 then $\cup_{i=1}^\infty A_i \in \calA$. 
 
 $P$ is a \textbf{probability set function} if $P(A)\geq0$ for all $A\in\calA$; $P(\emptyset)=0$; $P(\calS)=1$,
@@ -129,11 +129,29 @@ $P(|X-\mu|\geq k\sigma) \leq \frac{1}{k^2}$ (\textbf{Chebyshev}).
 \item If $\phi$ is convex on an open interval $I$ and $X$ is a random
 variable whose support is contained in $I$ and has finite expectation,
 then $ \phi(E[X]) \leq E[\phi(X)]$ (\textbf{Jensen}).
-
-
-
-
 \end{enumerate}
+
+\subsection{Common distributions}
+There are some distributions we are expected to know about:
+
+\begin{description}
+\item[Uniform] A uniform distribution on $[a,b]$ is written $U(a,b)$, has a density $1/(b-a)$ on $[a,b]$ and 
+a d.f. $F(x)=x/(b-a)$ on $[a,b]$. 
+\item[Standard normal] A standard normal distribution is written $N(0,1)$, and the density is 
+\[ \phi(z) = \frac{1}{\sqrt{2\pi}} e^{-z^2/2}.\] The distribution function is often written $\Phi(z)$ but
+there is no analytical expression. The moment generating function is $m(t) = e^{t^2/2}$.
+\item[Exponential] An exponential distribution with parameter $\lambda$ is written $\mathrm{Exp}(\lambda)$, 
+has density $f(x)=\lambda \exp(-\lambda  x)$ on $[0,\infty)$ and distribution function $F(x)=1- \exp(-\lambda x)$.
+\item[Binomial] If an event happens with probability $p$ in a single (binary)
+Bernoulli trial, the distribution of the number of events in $n$ trials has
+probability mass function $p(k) = \binom{n}{k} p^k (1-p)^{n-k}$, with the
+binomial coefficient $\binom{n}{k} = n!/k!(n-k)!$.
+\item[Poisson] A Poisson distribution on the integers $\{0,1,2,\dots\}$ has probability mass function 
+$p(x) = \lambda^x \exp(-\lambda)/x!$, the distribution function is not pretty. The moment generating function
+is $m(t) = \exp(\lambda( \exp(t) -1))$.
+\end{description}
+
+A more complete overview of distributions is given by \citet{Leemis2008}.
 
 \subsection{Functions of random variables}
 If $X$ is a random variable and $g$ is a function, $Y=g(X)$ is another random variable.
@@ -262,7 +280,7 @@ We can modify this most simple t-test in various ways.
 When we control the type-I error probability to $\alpha$ and the type-II error probability
 to $\beta$, we say that we have \textbf{power} $1-\beta$. 
 In order to calculate power, it is necessary to be explicit about the alternative hypothesis 
-we consider---or calculate for a range of alternative hypothesis. 
+we consider---or calculate for a range of alternative hypotheses. 
 Power is the probability of a significant result under the alternative hypothesis, and is a good thing. 
 Among people who design experiments, it is customary to aim for power of 80\% or 90\%.
 
@@ -277,7 +295,8 @@ size matters.
 
 In Figure~\ref{fig:power} we see the power of a two-sided, two-sample $t$-test
 of $\mu=0$ at different alternative hypotheses about the effect size and at
-different total sample size.
+different total sample size. Measuring moderate effect sizes require large sample
+sizes to have the power that most consider appropriate (at 0.8 and above). 
 
 \begin{figure}[tb]
 \includegraphics[width=\textwidth]{../graphs/powergraph}
@@ -287,6 +306,29 @@ size and sample size varies ($\alpha=0.05$)}\label{fig:power}
 \end{figure}
 
 
+If we analyze classical hypothesis testing with Bayesian methods, we can uncover some
+unsettling consequences of how low power affects statistical inference. 
+Consider Figure~\ref{fig:B}. We encode our prior knowledge as $p$, our belief that
+nature made the alternative hypothesis true, while $1-p$ is our belief about
+the probability that $H_0$ is true. We cannot observe if we are at the $H_0$ or $H_A$ node,
+but if we are at $H_0$ we reject with probability $\alpha$, the level of significance for our
+test (a type-I error). If we are at $H_A$, we reject with probability $\gamma$, the power of the
+test. Rejecting $H_0$, the Bayesian posterior belief in $H_A$ is
+\begin{align*}
+   P(H_A|\mathrm{Reject} H_0) & = \frac{P(\mathrm{Reject} H_0|H_A) \cdot P(H_A)}{P(\mathrm{Reject} H_0} \\
+   &= \frac{p\gamma}{(1-p)\alpha + p\gamma}.  
+\end{align*}
+
+Consider a surprising result ($p=0.1$) in and underpowered study ($p=0.5$), our posterior belief
+in $H_A$ should not be very strong: $0.1\cdot 0.5 / (0.9\cdot 0.05 + 0.1\cdot 0.5) = 0.53$.
+For this reason there are people who advocate for much stricter $\alpha$: \citet{Benjamin2017} argue
+for using $\alpha=0.005$ as a conventional level instead of $0.05$. 
+
+\begin{figure}[tb]
+\includegraphics[width=\textwidth]{../graphs/B.png}
+
+\caption{Statistical game tree}\label{fig:B}
+\end{figure}
 
 
 \section{Asymptotic theory}
@@ -374,7 +416,7 @@ and we are interested in a function of these moments or parameters, we can use t
 $\Delta$-rule to calculate the distribution of these functions. Statistical packages
 will often do this automatically (example: Stata's \texttt{testnl} command).
 
-\section{Math facts}
+\section{Selected math facts}
 In this section, there are some mathematical facts that turn out to be useful
 for probability and statistics but isn't really part of statistics itself.
 
