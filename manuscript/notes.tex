@@ -23,7 +23,7 @@
 
 
 \tableofcontents
-
+\thispagestyle{empty}
 \newpage
 \noindent This set of compact notes is written to support the August method camp
 in probability and statistics for new Ph.D students at NHH Norwegian School of
@@ -140,13 +140,14 @@ There are some distributions we are expected to know about:
 a d.f. $F(x)=x/(b-a)$ on $[a,b]$. 
 \item[Standard normal] A standard normal distribution is written $N(0,1)$, and the density is 
 \[ \phi(z) = \frac{1}{\sqrt{2\pi}} e^{-z^2/2}.\] The distribution function is often written $\Phi(z)$ but
-there is no analytical expression. The moment generating function is $m(t) = e^{t^2/2}$.
+there is no analytical expression. See Table~\ref{tab:z} in the back for some tabulated values.
+The moment generating function is $m(t) = \exp(t^2/2)$.
 \item[Exponential] An exponential distribution with parameter $\lambda$ is written $\mathrm{Exp}(\lambda)$, 
-has density $f(x)=\lambda \exp(-\lambda  x)$ on $[0,\infty)$ and distribution function $F(x)=1- \exp(-\lambda x)$.
+has density $f(x)=\lambda \exp(-\lambda  x)$ on $[0,\infty)$, and distribution function $F(x)=1- \exp(-\lambda x)$.
 \item[Binomial] If an event happens with probability $p$ in a single (binary)
-Bernoulli trial, the distribution of the number of events in $n$ trials has
-probability mass function $p(k) = \binom{n}{k} p^k (1-p)^{n-k}$, with the
-binomial coefficient $\binom{n}{k} = n!/k!(n-k)!$.
+Bernoulli trial, the distribution of the number of events $k$ in $n$ trials has
+probability mass function $p(k) = \binom{n}{k} p^k (1-p)^{n-k}$ (with the
+binomial coefficient $\binom{n}{k} = n!/k!(n-k)!$).
 \item[Poisson] A Poisson distribution on the integers $\{0,1,2,\dots\}$ has probability mass function 
 $p(x) = \lambda^x \exp(-\lambda)/x!$, the distribution function is not pretty. The moment generating function
 is $m(t) = \exp(\lambda( \exp(t) -1))$.
@@ -326,8 +327,9 @@ For this reason there are people who advocate for much stricter $\alpha$: \citet
 for using $\alpha=0.005$ as a conventional level instead of $0.05$. 
 
 \begin{figure}[tb]
-\includegraphics[width=\textwidth]{../graphs/B.png}
-
+  \begin{center}
+\includegraphics[width=0.8\textwidth]{../graphs/B.pdf}
+  \end{center}
 \caption{Statistical game tree}\label{fig:B}
 \end{figure}
 
@@ -486,7 +488,7 @@ exists a number $\xi$ between $0$ and $t$ such that \[ m(t) = m(0) + m'(0) t +
     \bottomrule
     \end{tabular}
   \end{footnotesize}
-  
+
     \medskip
     \emph{Note:} To calculate $\Phi(z)$ for $z\geq0$, find the row using the
     first decimal in $z$, and find the second decimal to find the correct
