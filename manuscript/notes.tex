@@ -1,11 +1,13 @@
 \documentclass[twoside]{article}
 \usepackage{geometry}
-\geometry{paperwidth=148mm,paperheight=210mm,margin=10mm}
+\geometry{paperwidth=148mm,paperheight=210mm,margin=15mm}
 \usepackage{graphicx}
 \usepackage{stix}
-\pagestyle{empty}\thispagestyle{empty}
+\usepackage{url}
+\usepackage{natbib}
+%\pagestyle{empty}\thispagestyle{empty}
 
-\title{Compact notes on probability}
+\title{Compact notes on probability and statistics}
 \author{Erik Ø. Sørensen}
 
 \input{commands.tex}
@@ -17,14 +19,31 @@
 \sloppy
 \frenchspacing
 
-\noindent This set of compact notes is written to support the fall method camp
-in probability and statistics for new Ph.D students at NHH Norwegian
-School of Economics and is in no way intended to replace a proper
-book on the topics. 
+
 
 \tableofcontents
 
 \newpage
+\noindent This set of compact notes is written to support the August method camp
+in probability and statistics for new Ph.D students at NHH Norwegian School of
+Economics, and is in no way intended to replace a proper book on the topics or
+be subject to independent study.\footnote{When you find typos and inconsistencies,
+it would be fantastic if you would register an issue---or a pullrequest---at the
+Github repo \url{https://github.com/ErikOSorensen/CompactNotes}.}
+
+This set of notes relies a lot on the two books
+I have used for teaching in the last decade: \citet{Hogg2013} and
+\citet{Linton2017}. When it comes to the statistics part, econometrics textbooks
+will probably be sufficient for almost everyone. For those that need a more
+theoretical grounding, a first escalation might be \citet{Rosenthal2006}; the
+level of rigour of \citet{Billingsley1995} should be sufficiently high for
+everyone.
+
+
+We will not cover software in the Method Camp, but you can never go wrong by
+having a look at \citet{Wickham2017} and their introduction to modern R.
+
+
 \section{Probability}
 Let us define a \textbf{sample space} of all possible outcome of some
 event (a set). Example, role of a die: $\calS =\{1,2,3,4,5,6\}$. 
@@ -173,16 +192,101 @@ $\E[u(X_1)v(X_2)] = \E[u(X_1)]\cdot \E[v(X_2)]$.
 Let $(X_1,X_2)$ have joint CDF
   $F(x_1,x_2)$ and let $X_1$ and $X_2$ have marginal CDFs $F_1(x_1)$
   and $F_2(x_2)$. Then $X_1$ and $X_2$ are independent if and only if 
-$$F(x_1,x_2)= F_1(x_1) F_2(x_2).$$
+  \[F(x_1,x_2)= F_1(x_1) F_2(x_2),\]
+  the joint d.f. being the product of marginal d.f.s. It follows that if the corresponding
+  densities exist, $X_1$ and $X_2$ are independent if the joint
+  density is the product of marginal densities.
 
 
-A vector $\mathbf{X}=(X_1,\dots,X_n)$ where each element is an \emph{independent} draw from the same distribution as the random variable
-$X$ is known as a \textbf{random sample} of size $n$ of the variable
-$X$.
+
+For complete generality, let $Y_1=u_1(X_1,X_2)$ and $Y_2=u_2(X_1,X_2)$ be
+one-to-one transformed random variables, and let $w_1$ and $w_2$ be inverses.
+Then in general, 
+\begin{multline*} \int\!\!\!\int_A f_{X_1,X_2}(x_1,x_2)dx_1 d x_2 \\
+= \int\!\!\!\int_B
+f_{X_1,X_2} (w_1(y_1,y_2),w_2(y_1,y_2))| \det(\mathbf{J}(y_1,y_2))| d y_1
+dy_2,\end{multline*} 
+where $\mathbf{J}(y_1,y_2)$ is the Jacobian of $\mathbf{w}(\mathbf{y})$ and $B$ is
+the image $B=\mathbf{u}(A)$. This is an application of the general formula
+for integration with change of variables in calculus.
 
 
+A vector $\mathbf{X}=(X_1,\dots,X_n)$ where each element is an
+\emph{independent} draw from the same distribution as the random variable $X$ is
+known as a \textbf{random sample} of size $n$ of the variable $X$.
 
 \section{Estimation}
+
+\section{Hypothesis testing}
+Assume that we have two alternative ways to think of what might
+be true.
+
+The distribution of $X$ is $f(x;\theta)$, with parameter
+$\theta\in\Omega$, and our ideas about truth can be described by
+regions of $\Omega$:
+\[ H_0: \theta\in\omega_0 \quad \text{vs $H_1: \theta\in\omega_1$.}
+\]
+
+Our task is, based on a sample from the distribution of $X$, determine
+whether to keep on insisting on $H_0$ or reject that in favor of
+$H_1$. What we want is often to fix the probability of Type I error
+(``significance level'') to $\alpha=0.01,0.05,\dots$, and conditional
+on that, minimize probability of type II error.
+
+Strictly speaking, we decide on a regions of $(X_1,\dots,X_n)\in C$ in
+which to accept or reject $H_0$, but in practice we define
+test-statistics $T_n(X_1,\dots,X_n)$ and decide on regions of the test
+statistics.
+Instead of reporting reject/accept with a given $\alpha$-criterion, papers often report $p$-values (but with
+implied fixed $\alpha$). 
+
+\textbf{P-values} are the probability of at least as extreme data given $H_0$,
+\[ P( \text{data}| H_0).\]
+They do not address the likelihood of $H_0$ being true!
+In the classical inference, there are never probabilities attached to hypotheses: Hypotheses are true 
+or false, and this is not a sampling issue.
+If we want to be Bayesian about hypotheses (have beliefs about them), we need to incorporate the priors: 
+\[ P(H_0|\text{data}) = \frac{ P(\text{data}|H_0) P(H_0)}{ P(\text{data}) }.
+\]
+
+If we assume that $X$ is normally distributed, we could 
+test if $E[X] = \mu_0$ using an expression such as
+\[
+t_n = \frac{\overline{X}_n - \mu_0}{\sigma/\sqrt{n}}.
+\]
+If we know $\sigma$, then $t_n$ would be normally distributed $N(0,1)$ under $H_0: E[X]=\mu_0$. 
+This would be true even in small samples.
+We can modify this most simple t-test in various ways.
+
+
+When we control the type-I error probability to $\alpha$ and the type-II error probability
+to $\beta$, we say that we have \textbf{power} $1-\beta$. 
+In order to calculate power, it is necessary to be explicit about the alternative hypothesis 
+we consider---or calculate for a range of alternative hypothesis. 
+Power is the probability of a significant result under the alternative hypothesis, and is a good thing. 
+Among people who design experiments, it is customary to aim for power of 80\% or 90\%.
+
+Assume a simple one-sample, one-sided $t$-test against a null-hypothesis of $E[X]=0$. This will
+be significant at $\alpha=5\%$ when $t> 1.64$, with probability
+\[
+P\left( \frac{\overline{X}_n - \mu_0}{\sigma/\sqrt{n}} > 1.64 | E[X]=\mu_1\right) = 
+1 - \Phi\left( 1.64 - \frac{\mu_1}{\sigma/\sqrt{n}}\right).
+\]
+Only the ratio $\mu_1/\sigma$, often known as the \textbf{effect size}  $\delta$, and the sample
+size matters.
+
+In Figure~\ref{fig:power} we see the power of a two-sided, two-sample $t$-test
+of $\mu=0$ at different alternative hypotheses about the effect size and at
+different total sample size.
+
+\begin{figure}[tb]
+\includegraphics[width=\textwidth]{../graphs/powergraph}
+
+\caption{Power for a two-sided, two-sample $t$-test of $H_0: \mu=0$ as the effect 
+size and sample size varies ($\alpha=0.05$)}\label{fig:power}
+\end{figure}
+
+
 
 
 \section{Asymptotic theory}
@@ -275,8 +379,10 @@ In this section, there are some mathematical facts that turn out to be useful
 for probability and statistics but isn't really part of statistics itself.
 
 The \textbf{exponential function}, written $e^s$ or $\exp(s)$ is important. Can be defined by the
-series expansion \[ e^x = \sum_{k=0}^\infty \frac{x^k}{k!},\] and $\exp'(s)=\exp(s)$.
-It is also the case that \[ e^x = \lim_{n\rightarrow \infty} \left( 1 + \frac{x}{n} \right)^n. \]
+series expansion \[ e^x = \sum_{k=0}^\infty \frac{x^k}{k!},\] or
+\[ e^x = \lim_{n\rightarrow \infty} \left( 1 + \frac{x}{n} \right)^n. \]
+It is also the case that  $\rd e^s / \rd s =e^s$.
+
 
 If $\psi$ is some function such that $\psi(n) \rightarrow 0$ as $n\rightarrow\infty$,
 then \[ \lim_{n\rightarrow\infty} \left(1 + \frac{x}{n} + \frac{\psi(n)}{n}  \right)^n = e^x,\]
@@ -287,5 +393,8 @@ least twice differentiable functions functions $m\!\!\!:\!\!\SR \rightarrow \SR$
 exists a number $\xi$ between $0$ and $t$ such that \[ m(t) = m(0) + m'(0) t +
 \frac{1}{2} m''(\xi) t^2.\]
 
+\addcontentsline{toc}{section}{References}
+\bibliographystyle{standard3}
+\bibliography{mmref}
 
 \end{document}

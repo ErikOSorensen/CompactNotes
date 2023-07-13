@@ -26,5 +26,28 @@ transformation_of_RV_graph <- function() {
   a + b + plot_annotation(tag_levels = "a")
 }
 
+powergraph <- function() {
+  deltas <- seq(0, 0.75, by=0.01)
+  n <- c(50, 100, 250, 500, 1000, 2500) 
+  df <- expand.grid(deltas, n)
+  names(df) <- c("delta", "n")
+  df$power = rep_along(df$n,0)
+  for (i in seq_along(df$n)) {
+    ns <- df$n[i]/2
+    ds <- df$delta[i]
+    pwr <- power.t.test(n=ns, delta=ds)
+    df$power[i] = pwr$power
+  }
+  df |> mutate(nf = factor(n)) |>
+    ggplot(aes(x=delta, y=power, group=nf)) +
+    geom_line(aes(linetype=nf)) + 
+    theme_minimal() +
+    labs(x = "Effect size (in SDs)", y = "Power (given alpha=0.05)", linetype="Total n:")
+}
+
+
 transformation_of_RV_graph()
 ggsave(here::here("graphs","transformation_of_RV.pdf"), width=12.8, height = 6,units = "cm" )
+
+powergraph()
+ggsave(here::here("graphs","powergraph.pdf"), width=12.8, height=6, units = "cm")
