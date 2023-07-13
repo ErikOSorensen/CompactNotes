@@ -45,9 +45,30 @@ powergraph <- function() {
     labs(x = "Effect size (in SDs)", y = "Power (given alpha=0.05)", linetype="Total n:")
 }
 
+standard_normal_table <- function() {
+  ys <- seq(0, 3.0, by=0.1)
+  xs <- seq(0,0.09, by=0.01)
+  l <- length(ys)
+  b <- length(xs)
+  m <- matrix(0, nrow=l, ncol=b)
+  for (i in seq_along(ys)) {
+    for (j in seq_along(xs)) { 
+      v <- ys[i] + xs[j]
+      m[i,j] <- pnorm(v)
+    }
+  }
+  df <- m |> as_tibble() 
+  names(df) <- c("0.00", "0.01", "0.02", "0.03", "0.04", "0.05", "0.06","0.07", "0.08", "0.09")
+  df$z <- as.character(format(ys, digits = 2))
+  df |> dplyr::select(c(z,`0.00`, `0.01`, `0.02`, `0.03`, `0.04`, `0.05`, `0.06`,`0.07`, `0.08`, `0.09`)) |> 
+                        gt::gt() |> gt::fmt_number(decimals = 3) |>
+    gt::tab_header(title="Standard normal table") |>
+    gt::as_latex()
+}
 
-transformation_of_RV_graph()
-ggsave(here::here("graphs","transformation_of_RV.pdf"), width=12.8, height = 6,units = "cm" )
 
-powergraph()
-ggsave(here::here("graphs","powergraph.pdf"), width=12.8, height=6, units = "cm")
+#transformation_of_RV_graph()
+#ggsave(here::here("graphs","transformation_of_RV.pdf"), width=12.8, height = 6,units = "cm" )
+
+#powergraph()
+#ggsave(here::here("graphs","powergraph.pdf"), width=12.8, height=6, units = "cm")
