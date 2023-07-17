@@ -237,6 +237,43 @@ known as a \textbf{random sample} of size $n$ of the variable $X$.
 
 \section{Estimation}
 
+For estimation, we would like to have some rules to uncover empirical analogs
+to theoretically defined parameters. The \textbf{analog principle} is to 
+start with a theoretically defined parameter (such as $\mu=\E[X]$) and set its
+empirical analog equal to this in the sample. The simple average is is the
+empirical analog of an expectation, the sample mean sum square is the empirical
+analog of variance and so on. 
+
+For the expectation case, the analog principle is to set $\widehat{\mu} = n^{-1}\sum X_i$,
+often written $\overline{X}_n$. For a simple regression model,
+\[ Y_i = \alpha + \beta X_i + \varepsilon_i,\] the core assumption is that $\cov[\varepsilon_i,X_i]=0$.
+Reformulating, $\cov[Y_i - (\alpha + \beta X_i), X_i]$, or that $\cov[Y_i,X_i] = \beta \var[X_i]$.
+The empirical analog of this is that
+\[ \widehat{\cov[X_i,Y_i]} = \widehat{\beta} \widehat{\var[X_i]},\]
+with the rule that $\widehat{A}$ always mean ``empirical estimate of $A$.'' This equation
+is easily solved for $\widehat{\beta} = \widehat{\cov[X_i,Y_i]} / \widehat{\var[X_i]}$. To find
+$\widehat{\alpha}$ use the same kind of procedure for the theoretical moment $\E[\varepsilon_i]=0$. This kind
+of application of the analog principle is called \textbf{method of moments}. Note
+that in this regression case, the assumption $\cov[Y_i - (\alpha + \beta X_i), X_i]$ is equivalent
+to the expected first order condition of a least-square minimization.
+
+Often what seems like different approaches end up as equivalent to method of moment estimation.
+An example: With \textbf{maximum likelihood}, under some regularity assumptions maximum likelihood 
+estimation is equivalent to method of moments with the additional result that the expectation 
+of the \textbf{score} (the first order condition of the log likelihood) is zero. But in general,
+maximum likelihood is based on maximizing the probability (or density) of the data $L(\mX;\theta)$ 
+given the parameters $\widehat{\theta}$. Most of the time, we prefer to maximize the log likelihood,
+which for an iid sample is just the sum of individual log likelihoods.
+
+In most of applied economics, we think of the parameters we want to estimate as properties
+of some \textbf{data generating process} that potentially can generate infinitely many realizations and
+which is inherently stochastic. This tradition goes back to Trygve \citet{Haavelmo44}.
+In survey statistics we instead formulate the problem such that there is a finite population true and
+deterministic value, but our estimates are random variables because we only sample a subset of the
+full population. Either way, our estimates are random variables, and the study of the stochastic
+properties of these random variables is known as \textbf{inference}, which is a crucial input
+into hypothesis testing. 
+
 \section{Hypothesis testing}
 Assume that we have two alternative ways to think of what might
 be true.
@@ -437,6 +474,27 @@ A useful formulation of \textbf{Taylor's formula} is that for continuous and at
 least twice differentiable functions functions $m\!\!\!:\!\!\SR \rightarrow \SR$, there
 exists a number $\xi$ between $0$ and $t$ such that \[ m(t) = m(0) + m'(0) t +
 \frac{1}{2} m''(\xi) t^2.\]
+
+
+\section{Some calculating rules for $P$, $\E$, $\var$ and $\cov$}
+Let $A$ and $B$ be some events; $X$, $Y$, and $Z$ are random variables.
+\begin{enumerate}
+\item $P[A] = 1 - P[A^c]$.
+\item $P[A\cup B] = P[A] + P[B] - P[A\cap B]$.
+\item $P[A\cap B] \leq \min\{P[A], P[B]\}$.
+\item $P[A \cap B] = P[A] P[B|A]$.
+\item $\E\left[\E[Y|X]\right] = \E[Y]$.
+\item $\E[a + bX ] = a + bE[X]$.
+\item $\E[g(X)] = \int g(x) f_X(x) \rd x$.
+\item $\E[XY] = \E[X]\E[Y]$ but only when $X$ and $Y$ are \emph{independent}!
+\item $\var[X] = \E[X^2] - \left(E[X]\right)^2$.
+\item $\var[\overline{X}] = \sigma^2 / n$
+\item $\cov[X,Y] = \E[XY] - \E[X]\E[Y]$.
+\item $\cov[X,X] = \var[X]$.
+\item $\var[a X + b Y] = a^2 \var[X] + b^2 \var[Y] + 2 a b \cov[X,Y]$. Note the consequence when $b$ is negative.
+\item $\cov[X+Y,Z] =  \cov[X,Z] + \cov[Y,Z]$.
+\item $\cov[g(X),X] = \E[g(X)X]  - \E[g(X)]\E[X]$.
+\end{enumerate}
 
 
 \begin{table}
