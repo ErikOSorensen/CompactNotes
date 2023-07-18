@@ -26,11 +26,9 @@
 \thispagestyle{empty}
 \newpage
 \noindent This set of compact notes is written to support the August method camp
-in probability and statistics for new Ph.D students at NHH Norwegian School of
+in probability and statistics for new PhD students at NHH Norwegian School of
 Economics, and is in no way intended to replace a proper book on the topics or
-be subject to independent study.\footnote{When you find typos and inconsistencies,
-it would be fantastic if you would register an issue---or a pullrequest---at the
-Github repo \url{https://github.com/ErikOSorensen/CompactNotes}.}
+be subject to independent study.
 
 This set of notes relies a lot on the two books
 I have used for teaching in the last decade: \citet{Hogg2013} and
@@ -42,25 +40,36 @@ everyone.
 
 
 We will not cover software in the Method Camp, but you can never go wrong by
-having a look at \citet{Wickham2017} and their introduction to modern R.
+having a look at \citet{Wickham2017} and their introduction to modern~R.
 
 
 \section{Probability}
+Modern probability theory (since the 1930s) is defined in terms of set theoretic
+notions. 
 Let us define a \textbf{sample space} of all possible outcome of some
 event (a set). Example, role of a die: $\calS =\{1,2,3,4,5,6\}$. 
 An \textbf{event} is a subset of $\calS$. Events are what we assign probability
 to.
 
-The set of possible events must be restricted to a $\mathbf{\sigma}$\textbf{-algebra} $\calA$,
-a class of subsets of $\calS$ such that if $A\in\calS$ then $A^c\in\calA$, if $A_1,A_2,\dots\in \calA$,
-then $\cup_{i=1}^\infty A_i \in \calA$. 
+The set of possible events must be restricted to a
+$\mathbf{\sigma}$\textbf{-algebra} $\calA$, a class of subsets of $\calS$. We
+require that if $A\in\calS$ then $A^c\in\calA$; if $A\in\calA$ and $B\in\calA$
+then $A\cup B$ is also in $\calA$. This defines an \textbf{algebra}. We also
+require that taking  if $A_1,A_2,\dots\in \calA$, then $\cup_{i=1}^\infty A_i
+\in \calA$, this last requirement is what restricts $\calA$ to a
+$\sigma$-algebra. Some authors reference a $\sigma$-algebra as a $\sigma$-\emph{field}.
 
 $P$ is a \textbf{probability set function} if $P(A)\geq0$ for all $A\in\calA$; $P(\emptyset)=0$; $P(\calS)=1$,
 and if $A_1,A_2,\dots$ is a series of \textbf{disjoint} sets ($A_i\cap A_j\emptyset$ when $i\neq j$), then
-$P(\cup_{i=1}^\infty A_i)=\sum_{i=1}^\infty P(A_i)$.
-
-
+$P(\cup_{i=1}^\infty A_i)=\sum_{i=1}^\infty P(A_i)$. 
 The triple $(\calS,\calA,P)$ is called a \textbf{probability space}.
+
+With a discrete sample space, we will often work with the set of all subsets as the relevant 
+$\sigma$-algebra. The set of all subsets is also referred to as the \textbf{power set} and written $2^\calS$.
+If the sample space is continuous (like the set of all real numbers), there are technical difficulties
+working with the power set; the power set of $\SR$ is not a $\sigma$-algebra. Instead, for real numbers 
+we work with subsets that are open intervals, $\calB = \{(a,b), \ a,b\in\SR\}$. Using all sets of type $\calB$,
+and the countable unions and complements of these sets, we can define the \textbf{Borel $\sigma$-algebra}.
 
 For $A$ and $B$ in $\calA$, we define the \textbf{conditional probability} of $A$ given $B$
 as \[ P(A|B) = P(A\cap B)/P(B),\] when $P(B)>0$. From the definition, we can find 
@@ -76,13 +85,19 @@ is symmetric but not transitive.
 
 A \textbf{random variable}  (r.v.) is a function from a sample space to the real numbers,
 $X\!\!: \calS \rightarrow \SR$. The probability space on $\calS$ maps to a new
-probability space on $\SR$ (there are regularity conditions). 
+probability space on $\SR$. There are technical requirements:
+$X$ must be \textbf{measurable},
+\[ \calA_X = \{A\subset S: X(A) \in \calB\} = \{X^{-1}(B): B\in \calB\}\subseteq \calA.\]
+Here $\calB$ is a $\sigma$-algebra on $\SR$ and $\calA$ is the $\sigma$-algebra on $\calS$.
+Now the probability measure $P_X$ is defined $P_X(B) = P(X^{-1}(B))$.
 
-
+It is customary to use capital roman letters to refer to random variables, but
+lower case letters to refer to particular values (numbers), such that $X(s)=x$
+is the statement that at $s\in\calS$, the random variable $X$ takes on the value $x$.
 
 \subsection{Distribution}
 A random variable $X$ is said to have a \textbf{distribution function} (d.f.) $F_X$
-such that \[ F_X(s) = P( X\in (-\infty, s]).\] When the derivative of the
+such that \[ F_X(s) = P_X((-\infty, s])=P(\{a: X(a)\leq s\}).\] When the derivative of the
 distribution function exists, it is called the \textbf{density} of $X$, and
 $f_X(s)=F'_X(s)$. We then say $X$ is distributed \textbf{continuously}. General
 properties: $f_X(s)\geq0$, $\int_a^b f_X(s)\rd s = P(X\in[a,b])$, and
@@ -169,11 +184,13 @@ and we can conclude that $F_Y(y)= F_X(g^{-1}(y))$. The density follows by differ
 If instead $Y=h(X)$ and $h$ is decreasing (as in Figure ~\ref{fig:frv}b), we
 start with a different inequality: If $h(X) \leq y$, then $X\geq h^{-1}(y)$,
 and $F_Y(y) = P(X\geq h^{-1})) = 1 - P(X\leq h^{-1}(y)) = 1 - F_X(h^{-1}(y))$.
-
 Either way, for increasing or decreasing $g$'s, taking derivatives we find that 
 $f_Y(y) = f_X(g^{-1}(y)) \cdot | \rd g^{-1}(y)/\rd y|$.
 The absolute value of the derivative controls for whether $g$ is increasing or decreasing.
 
+For a function that is increasing on the subset $A$ and decreasing on $B$, we would use the
+law of total probability, $P(Y\leq y)= P(Y\leq y , X\in A) + P(Y\leq y , X\in B)$ and 
+calculate each terms separately (with their own inverses). 
 
 \begin{figure}[tb]
 \includegraphics[width=0.95\textwidth]{../graphs/transformation_of_RV}
@@ -193,20 +210,37 @@ $X_1(c)=x_1$, $X_2(c)=x_2$. Then we say that $(X_1,X_2)$ is a
 If $(X_1,X_2)$ has density $f_{X_1,X_2}(x_1,x_2)$, the \textbf{marginal density}
 of $X_1$ is  $ f_{X_1}(x_1) = \int_{-\infty}^\infty f_{X_1,X_2}(x_1,x_2)\rd x_2$.
 
-If $(X_1,X_2)$ has a density, the \textbf{conditional density} of $X_1$ given $X_2$ is
-\[f_{X_1|X_2}(x_1|x_2)=\frac{f_{X_1,X_2}(x_1,x_2)}{f_{X_2}(x_2)},\]
-for $f_{X_2}(x_2)>0$.
-
-The \textbf{conditional expectation} is $\E[X_2|X_1=x_1] = \int_{-\infty}^\infty s
+If $(X_1,X_2)$ is discrete, then the conditional probability of $X_1$ given $X_2$ is
+\[ p_{X_1|X_2}(x_1|x_2) = \frac{p_{X_1,X_2}(x_1,x_2)}{p_{X_2}(x_2)}, \quad \text{where
+$p_{X_2}(x_2)>0$}.\] But if $(X_1,X_2)$ is continuous, all point probabilities are
+zero, and another way to determine conditional distribution is necessary. It
+turns out that if $(X_1,X_2)$ has a density, it is useful to define the
+\textbf{conditional density} of $X_1$ given $X_2$ as
+\[f_{X_1|X_2}(x_1|x_2)=\frac{f_{X_1,X_2}(x_1,x_2)}{f_{X_2}(x_2)},\quad \text{where $f_{X_2}(x_2)>0$}.\]
+With this conditional density, we can define
+the \textbf{conditional expectation} is $\E[X_2|X_1=x_1] = \int_{-\infty}^\infty s
 f_{X_2|X_1}(s|x_1) \rd s$.
+
+For the completely general case (which we won't be working with), it is useful to first define the \textbf{indicator function}, 
+\[ 1_{X\in S} = \begin{cases} 1 & \text{if $X\in S$,} \\ 0 & \text{if $X\notin S$.}\end{cases}\]
+and require that for all Borel subsets $S\subset \SR$,
+\begin{align*}
+  E[P(A|X)\cdot 1_{X\in S}] &= P(A\cap \{X\in S\}),  \\
+  E[E[Y|X]\cdot 1_{X\in S}]      &= E[Y\cdot 1_{X\in S}].
+\end{align*}
+These equations tie down both conditional probability and conditional
+expectation.\footnote{With the indicator function, we could have
+defined probability as $P(X\in A) = \E[1_{X\in A}]$, this would push the problem
+of defining conditional probability into the theory of integration.}
+
+
+
 
 Let $(X_1,X_2)$ have joint d.f. $F(x_1,x_2)$ and let $X_1$ and $X_2$ 
 have marginal d.f.s $F_1(x_1)$
   and $F_2(x_2)$. Then $X_1$ and $X_2$ are \textbf{independent} if and only if 
 $F(x_1,x_2)= F_1(x_1) F_2(x_2)$. 
 
-If $X_1$ and $X_2$ are independent and $\E[u(X_1)]$ and $\E[v(X_2)]$ exist, then
-$\E[u(X_1)v(X_2)] = \E[u(X_1)]\cdot \E[v(X_2)]$.
 
 
 Let $(X_1,X_2)$ have joint CDF
@@ -217,15 +251,18 @@ Let $(X_1,X_2)$ have joint CDF
   densities exist, $X_1$ and $X_2$ are independent if the joint
   density is the product of marginal densities.
 
+  If $X_1$ and $X_2$ are independent and $\E[u(X_1)]$ and $\E[v(X_2)]$ exist, then
+$\E[u(X_1)v(X_2)] = \E[u(X_1)]\cdot \E[v(X_2)]$.
+
 
 
 For complete generality, let $Y_1=u_1(X_1,X_2)$ and $Y_2=u_2(X_1,X_2)$ be
 one-to-one transformed random variables, and let $w_1$ and $w_2$ be inverses.
 Then in general, 
-\begin{multline*} \int\!\!\!\int_A f_{X_1,X_2}(x_1,x_2)dx_1 d x_2 \\
+\begin{multline*} \int\!\!\!\int_A f_{X_1,X_2}(x_1,x_2)\rd x_1 \rd x_2 \\
 = \int\!\!\!\int_B
-f_{X_1,X_2} (w_1(y_1,y_2),w_2(y_1,y_2))| \det(\mathbf{J}(y_1,y_2))| d y_1
-dy_2,\end{multline*} 
+f_{X_1,X_2} (w_1(y_1,y_2),w_2(y_1,y_2))| \det(\mathbf{J}(y_1,y_2))| \rd y_1
+\rd y_2,\end{multline*} 
 where $\mathbf{J}(y_1,y_2)$ is the Jacobian of $\mathbf{w}(\mathbf{y})$ and $B$ is
 the image $B=\mathbf{u}(A)$. This is an application of the general formula
 for integration with change of variables in calculus.
@@ -267,12 +304,19 @@ which for an iid sample is just the sum of individual log likelihoods.
 
 In most of applied economics, we think of the parameters we want to estimate as properties
 of some \textbf{data generating process} that potentially can generate infinitely many realizations and
-which is inherently stochastic. This tradition goes back to Trygve \citet{Haavelmo44}.
+which is inherently stochastic. This tradition goes back to Trygve \citet{Haavelmo1944}.
 In survey statistics we instead formulate the problem such that there is a finite population true and
 deterministic value, but our estimates are random variables because we only sample a subset of the
 full population. Either way, our estimates are random variables, and the study of the stochastic
 properties of these random variables is known as \textbf{inference}, which is a crucial input
 into hypothesis testing. 
+
+Often we want our estimators to be \textbf{unbiased}, such that
+$\E[\widehat{\theta}]=\theta_0$, with $\theta_0$ being the true value. We can
+define the \textbf{bias} as $b=\E[\widehat{\theta}] -\theta_0$. Even if
+estimators are biased (most non-linear estimators are biased), they can be
+\textbf{consistent}. To define consistency we need some asymptotic theory (in
+Section~\ref{sec:asymptotics}).
 
 \section{Hypothesis testing}
 Assume that we have two alternative ways to think of what might
@@ -303,8 +347,13 @@ They do not address the likelihood of $H_0$ being true!
 In the classical inference, there are never probabilities attached to hypotheses: Hypotheses are true 
 or false, and this is not a sampling issue.
 If we want to be Bayesian about hypotheses (have beliefs about them), we need to incorporate the priors: 
-\[ P(H_0|\text{data}) = \frac{ P(\text{data}|H_0) P(H_0)}{ P(\text{data}) }.
-\]
+\[ P(H_0|\text{data}) = \frac{ P(\text{data}|H_0) P(H_0)}{ P(\text{data}) }. \]
+Very little of applied economics is explicitly Bayesian, most is anchored in
+\textbf{frequentist inference}. In frequentist philosophy, there is always a
+true (but unknown) value of any parameter, and we do not put probabilities on
+our beliefs about this parameter. Probabilities are restricted to the
+\textbf{sampling distribution} of our estimators \emph{under some null
+hypothesis}.
 
 If we assume that $X$ is normally distributed, we could 
 test if $E[X] = \mu_0$ using an expression such as
@@ -358,7 +407,7 @@ test. Rejecting $H_0$, the Bayesian posterior belief in $H_A$ is
    &= \frac{p\gamma}{(1-p)\alpha + p\gamma}.  
 \end{align*}
 
-Consider a surprising result ($p=0.1$) in and underpowered study ($p=0.5$), our posterior belief
+Consider a surprising result ($p=0.1$) in an underpowered study ($\gamma=0.5$), our posterior belief
 in $H_A$ should not be very strong: $0.1\cdot 0.5 / (0.9\cdot 0.05 + 0.1\cdot 0.5) = 0.53$.
 For this reason there are people who advocate for much stricter $\alpha$: \citet{Benjamin2017} argue
 for using $\alpha=0.005$ as a conventional level instead of $0.05$. 
@@ -371,7 +420,7 @@ for using $\alpha=0.005$ as a conventional level instead of $0.05$.
 \end{figure}
 
 
-\section{Asymptotic theory}
+\section{Asymptotic theory}\label{sec:asymptotics}
 
 \subsection{Convergence in probability}
 
@@ -479,23 +528,33 @@ exists a number $\xi$ between $0$ and $t$ such that \[ m(t) = m(0) + m'(0) t +
 \section{Some calculating rules for $P$, $\E$, $\var$ and $\cov$}
 Let $A$ and $B$ be some events; $X$, $Y$, and $Z$ are random variables.
 \begin{enumerate}
-\item $P[A] = 1 - P[A^c]$.
-\item $P[A\cup B] = P[A] + P[B] - P[A\cap B]$.
-\item $P[A\cap B] \leq \min\{P[A], P[B]\}$.
-\item $P[A \cap B] = P[A] P[B|A]$.
+\item $P(A) = 1 - P(A^c)$.
+\item $P(A) = P(A\cap B) + P(A\cap B^c)$.
+\item $P(A\cup B) = P(A) + P(B) - P(A\cap B)$.
+\item $P(A\cap B) \leq \min\{P(A), P(B)\}$.
+\item $P(A \cap B) = P(A)P(B|A)$.
 \item $\E\left[\E[Y|X]\right] = \E[Y]$.
-\item $\E[a + bX ] = a + bE[X]$.
+\item $\E[a + bX ] = a + b\E[X]$.
+\item $\E[a X + b Y] = a\E[X] + b\E[Y]$.
 \item $\E[g(X)] = \int g(x) f_X(x) \rd x$.
 \item $\E[XY] = \E[X]\E[Y]$ but only when $X$ and $Y$ are \emph{independent}!
+\item $\E[|X+Y|] \leq \E[|X|] + E[|Y|]$.
 \item $\var[X] = \E[X^2] - \left(E[X]\right)^2$.
-\item $\var[\overline{X}] = \sigma^2 / n$
+\item $\var[\overline{X}_n] = \sigma^2 / n$.
 \item $\cov[X,Y] = \E[XY] - \E[X]\E[Y]$.
 \item $\cov[X,X] = \var[X]$.
-\item $\var[a X + b Y] = a^2 \var[X] + b^2 \var[Y] + 2 a b \cov[X,Y]$. Note the consequence when $b$ is negative.
+\item $\var[a + bX] = b^2 \var[X]$.
+\item $\var[a X + b Y] = a^2 \var[X] + b^2 \var[Y] + 2 a b \cov[X,Y]$, note the consequence when $b$ is negative.
 \item $\cov[X+Y,Z] =  \cov[X,Z] + \cov[Y,Z]$.
 \item $\cov[g(X),X] = \E[g(X)X]  - \E[g(X)]\E[X]$.
 \end{enumerate}
 
+\newpage
+\addcontentsline{toc}{section}{References}
+\bibliographystyle{standard3}
+\bibliography{mmref}
+
+\clearpage
 
 \begin{table}
   \caption{Standard normal distribution table}\label{tab:z}
@@ -554,8 +613,6 @@ Let $A$ and $B$ be some events; $X$, $Y$, and $Z$ are random variables.
     1-\Phi(-z)$. 
 \end{table}
 
-\addcontentsline{toc}{section}{References}
-\bibliographystyle{standard3}
-\bibliography{mmref}
+
 
 \end{document}
