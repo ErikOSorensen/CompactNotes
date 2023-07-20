@@ -80,7 +80,8 @@ as
 
 If $A$ and $B$ are events with positive probability, $A$ and $B$ are \textbf{independent} if
 $P(A\cap B) = P(A)\cdot P(B)$, $P(A|B)=P(A)$, and $P(B|A)=P(B)$ (all equivalent). Independence
-is symmetric but not transitive.
+is symmetric but not transitive: If $A$ and $B$ are independent and $B$ and $C$ are independent,
+it does not follow that $A$ and $C$ are independent.
 
 \section{Random variables}
 
@@ -160,10 +161,10 @@ There are some distributions we are expected to know about:
 \item[Uniform] A uniform distribution on $[a,b]$ is written $U(a,b)$, has a density $1/(b-a)$ on $[a,b]$ and 
 a d.f. $F(x)=x/(b-a)$ on $[a,b]$. Expectation is $(a+b)/2$, the variance is $(b-a)^2/12$. 
 \item[Standard normal] A standard normal distribution is written $N(0,1)$,  the density is 
-\[ \phi(z) = \frac{1}{\sqrt{2\pi}} e^{-z^2/2}.\] The distribution function is often written $\Phi(z)$ but
-there is no analytical expression. See Table~\ref{tab:z} in the back for some tabulated values.
-The moment generating function is $m(t) = \exp(t^2/2)$. The expectation is $1$ and the variance is $1$. The 
-standard normal distribution is \textbf{symmetric} around zero, $\Phi(s)=1-\Phi(s)$ for all $s\in\SR$.
+\[ \phi(z) = \frac{1}{\sqrt{2\pi}} e^{-z^2/2}.\] The distribution function is often written $\Phi$ but
+there is no analytical expression for this. See Table~\ref{tab:z} in the back for some tabulated values.
+The moment generating function is $m(t) = \exp(t^2/2)$. The expectation is $0$ and the variance is $1$. The 
+standard normal distribution is \textbf{symmetric} around zero, $\Phi(s)=1-\Phi(-s)$ for all $s\in\SR$.
 \item[Exponential] An exponential distribution with parameter $\lambda$ is written $\mathrm{Exp}(\lambda)$, 
 has density $f(x)=\lambda \exp(-\lambda  x)$ on $[0,\infty)$, and distribution function $F(x)=1- \exp(-\lambda x)$.
 The expectation is $1/\lambda$ and the variance is $1/\lambda^2$.
@@ -182,17 +183,18 @@ handbooks written with properties of various distributions.
 \subsection{Functions of random variables}
 If $X$ is a random variable and $g$ is a function, $Y=g(X)$ is another random variable.
 
-In Figure~\ref{fig:frv}a, $Y=g(x)$ is an increasing function. 
-Thinking about the distribution of $Y$, if we start from the primitives,
+In Figure~\ref{fig:frv}a, $Y=g(X)$ is an increasing function. 
+Considering the distribution of $Y$, 
 the distribution function for $Y$ is $F_Y(y) = P(Y\leq y)$. We can substitute
 the definition of $Y$ into this: $F_Y(y) = P(g(X)\leq y)$, where this
 substitution depends on $g$ being increasing. Continuing
 the substitutions, $P(g(X) \leq y) = P( g^{-1}(g(X)) \leq g^{-1}(y)) = P(X\leq g^{-1}(y))$,
-and we can conclude that $F_Y(y)= F_X(g^{-1}(y))$. The density follows by differentiation.
+and we can conclude that $F_Y(y)= F_X(g^{-1}(y))$. The density follows by differentiation, 
+$f_Y(y) = f_X(g^{-1}(y)) \rd g^{-1}(y)/\rd y$.
 
 If instead $Y=h(X)$ and $h$ is decreasing (as in Figure ~\ref{fig:frv}b), we
 start with a different inequality: If $h(X) \leq y$, then $X\geq h^{-1}(y)$,
-and $F_Y(y) = P(X\geq h^{-1})) = 1 - P(X\leq h^{-1}(y)) = 1 - F_X(h^{-1}(y))$.
+and $F_Y(y) = P(X\geq h^{-1}(y)) = 1 - P(X\leq h^{-1}(y)) = 1 - F_X(h^{-1}(y))$.
 Either way, for increasing or decreasing $g$'s, taking derivatives we find that 
 $f_Y(y) = f_X(g^{-1}(y)) \cdot | \rd g^{-1}(y)/\rd y|$.
 The absolute value of the derivative controls for whether $g$ is increasing or decreasing.
@@ -556,7 +558,7 @@ Let $A$ and $B$ be some events; $X$, $Y$, and $Z$ are random variables.
 \item $\cov[X,Y] = \E[XY] - \E[X]\E[Y]$.
 \item $\cov[X,X] = \var[X]$.
 \item $\var[a + bX] = b^2 \var[X]$.
-\item $\var[a X + b Y] = a^2 \var[X] + b^2 \var[Y] + 2 a b \cov[X,Y]$, note the consequence when $b$ is negative.
+\item $\var[a X \pm b Y] = a^2 \var[X] + b^2 \var[Y] \pm 2 a b \cov[X,Y]$.
 \item $\cov[X+Y,Z] =  \cov[X,Z] + \cov[Y,Z]$.
 \item $\cov[g(X),X] = \E[g(X)X]  - \E[g(X)]\E[X]$.
 \end{enumerate}
