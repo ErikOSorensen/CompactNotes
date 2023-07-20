@@ -31,16 +31,17 @@ Economics, and is in no way intended to replace a proper book on the topics or
 be subject to independent study.
 
 This set of notes relies a lot on the two books
-I have used for teaching in the last decade: \citet{Hogg2013} and
-\citet{Linton2017}. When it comes to the statistics part, econometrics textbooks
+I have used for teaching in the last decade: \citet{Hogg2013} is good a general 
+mathematical statistics textbook, 
+\citet{Linton2017} is more compact and aimed at training econometricians. When it comes to the statistics part, econometrics textbooks
 will probably be sufficient for almost everyone. For those that need a more
 theoretical grounding, a first escalation might be \citet{Rosenthal2006}; the
 level of rigour of \citet{Billingsley1995} should be sufficiently high for
-everyone.
-
+everyone. For topics in probability and statistics, Wikipedia can also be quite good.
 
 We will not cover software in the Method Camp, but you can never go wrong by
-having a look at \citet{Wickham2017} and their introduction to modern~R.
+having a look at \citet{Wickham2017} and their introduction to modern~R (emphasizing
+the datawrangling for statistics).
 
 
 \section{Probability}
@@ -108,7 +109,7 @@ For \textbf{discrete} r.v., we define the \textbf{probability mass function} (pm
 $p_X(s) = P(X\in\{s\})$ for $s\in\calS$. This is analogous to the density function.
 
 \subsection{Expectation of a random variable}
-Let $X$ be a random variable. If $X$ is a continuous r.v.
+If $X$ is a continuous r.v.
 with pdf $f(x)$ and 
 \(\int_{-\infty}^\infty |x|f(x) \rd x < \infty,\)
 the \textbf{expectation} of $X$ exists as  
@@ -127,14 +128,19 @@ The k-th \textbf{moment} of $X$ is $\E [X^k]$ (when it exists).  We often write 
 $\sigma^2 = \E[(X-\mu)^2]$ (the \textbf{variance}). The k-th \textbf{central moment} 
 is $\E [ (X-\mu)^k]$.
 
-The function expectation $m_X(t)=\E[e^{tX}]$ is called the \textbf{moment generating function}
-when it exists in an open ball around zero. When it exists, $m'(0)=\E[X]$, $m''(0)=\E[X^2]$ and
-$m^k(0)=\E[X^k]$.
+The function expectation $m_X(t)=\E[\exp(tX)]$ is called the \textbf{moment
+generating function} when it exists (is finite) in an open ball around zero. When it exists,
+$m'(0)=\E[X]$, $m''(0)=\E[X^2]$ and $m^k(0)=\E[X^k]$, and it completely
+characterizes the distribution of $X$. For long tail distributions, the moment generating
+functions does not exist (example: log-normal distribution). Even when the moment generating function
+does not exist, the \textbf{characteristic function} always exist, which is very similar but
+involves complex numbers: $\phi_X(t)= \E[\exp(i t X)]$, with  $i = \sqrt{-1}$. The characteristic
+function always exist, and can completely characterize any distribution. 
 
 \subsection{Expectation results}
 \begin{enumerate}
 \item Let $X$ be a random variable and let $m$ be a positive integer. 
-Suppos(e that $E[X^m]$ exists. If $k$ is an integer and $k < m$, then
+Suppose that $E[X^m]$ exists. If $k$ is an integer and $k < m$, then
 $E[X^k]$ exists.
 \item Let $u(X)$ be a nonnegative function of the random variable $X$. If
 $E[u(X)]$ exists, then for every positive constant $c$,
@@ -152,23 +158,26 @@ There are some distributions we are expected to know about:
 
 \begin{description}
 \item[Uniform] A uniform distribution on $[a,b]$ is written $U(a,b)$, has a density $1/(b-a)$ on $[a,b]$ and 
-a d.f. $F(x)=x/(b-a)$ on $[a,b]$. 
-\item[Standard normal] A standard normal distribution is written $N(0,1)$, and the density is 
+a d.f. $F(x)=x/(b-a)$ on $[a,b]$. Expectation is $(a+b)/2$, the variance is $(b-a)^2/12$. 
+\item[Standard normal] A standard normal distribution is written $N(0,1)$,  the density is 
 \[ \phi(z) = \frac{1}{\sqrt{2\pi}} e^{-z^2/2}.\] The distribution function is often written $\Phi(z)$ but
 there is no analytical expression. See Table~\ref{tab:z} in the back for some tabulated values.
-The moment generating function is $m(t) = \exp(t^2/2)$.
+The moment generating function is $m(t) = \exp(t^2/2)$. The expectation is $1$ and the variance is $1$. The 
+standard normal distribution is \textbf{symmetric} around zero, $\Phi(s)=1-\Phi(s)$ for all $s\in\SR$.
 \item[Exponential] An exponential distribution with parameter $\lambda$ is written $\mathrm{Exp}(\lambda)$, 
 has density $f(x)=\lambda \exp(-\lambda  x)$ on $[0,\infty)$, and distribution function $F(x)=1- \exp(-\lambda x)$.
+The expectation is $1/\lambda$ and the variance is $1/\lambda^2$.
 \item[Binomial] If an event happens with probability $p$ in a single (binary)
 Bernoulli trial, the distribution of the number of events $k$ in $n$ trials has
 probability mass function $p(k) = \binom{n}{k} p^k (1-p)^{n-k}$ (with the
-binomial coefficient $\binom{n}{k} = n!/k!(n-k)!$).
+binomial coefficient $\binom{n}{k} = n!/k!(n-k)!$). The expectation is $n p$ and the variance is $n p(1-p)$.
 \item[Poisson] A Poisson distribution on the integers $\{0,1,2,\dots\}$ has probability mass function 
 $p(x) = \lambda^x \exp(-\lambda)/x!$, the distribution function is not pretty. The moment generating function
-is $m(t) = \exp(\lambda( \exp(t) -1))$.
+is $m(t) = \exp(\lambda( \exp(t) -1))$. The expectation is $\lambda$ and the variance is $\lambda$.
 \end{description}
 
-A more complete overview of distributions is given by \citet{Leemis2008}.
+A more complete overview of distributions is given by \citet{Leemis2008}. There are also multi-volume
+handbooks written with properties of various distributions. 
 
 \subsection{Functions of random variables}
 If $X$ is a random variable and $g$ is a function, $Y=g(X)$ is another random variable.
@@ -221,39 +230,33 @@ With this conditional density, we can define
 the \textbf{conditional expectation} is $\E[X_2|X_1=x_1] = \int_{-\infty}^\infty s
 f_{X_2|X_1}(s|x_1) \rd s$.
 
-For the completely general case (which we won't be working with), it is useful to first define the \textbf{indicator function}, 
-\[ 1_{X\in S} = \begin{cases} 1 & \text{if $X\in S$,} \\ 0 & \text{if $X\notin S$.}\end{cases}\]
-and require that for all Borel subsets $S\subset \SR$,
+For the completely general case (which we won't be working with), we require
+that for all Borel subsets $S\subset \SR$,
 \begin{align*}
-  E[P(A|X)\cdot 1_{X\in S}] &= P(A\cap \{X\in S\}),  \\
-  E[E[Y|X]\cdot 1_{X\in S}]      &= E[Y\cdot 1_{X\in S}].
+  \E[P(A|X)\cdot 1_{X\in S}] &= P(A\cap \{X\in S\}),  \\
+\E[\E[Y|X]\cdot 1_{X\in S}]      &= \E[Y\cdot 1_{X\in S}].
 \end{align*}
 These equations tie down both conditional probability and conditional
-expectation.\footnote{With the indicator function, we could have
-defined probability as $P(X\in A) = \E[1_{X\in A}]$, this would push the problem
-of defining conditional probability into the theory of integration.}
+expectation. Note that with the indicator function, it would be possible to 
+\emph{define} probability as $P(X\in A) = \E[1_{X\in A}]$, this would push the problem
+of defining conditional probability into the theory of integration.
 
 
 
 
-Let $(X_1,X_2)$ have joint d.f. $F(x_1,x_2)$ and let $X_1$ and $X_2$ 
-have marginal d.f.s $F_1(x_1)$
-  and $F_2(x_2)$. Then $X_1$ and $X_2$ are \textbf{independent} if and only if 
-$F(x_1,x_2)= F_1(x_1) F_2(x_2)$. 
+Let $(X_1,X_2)$ have a joint distribution function 
+$F(x_1,x_2)$ and let $X_1$ and $X_2$ have marginal distribution functions $F_1(x_1)$
+and $F_2(x_2)$. Then $X_1$ and $X_2$ are \textbf{independent} if and only if 
+\[F(x_1,x_2)= F_1(x_1) F_2(x_2),\]
+the joint d.f. being the product of marginal d.f.s. It follows that if the corresponding
+densities exist, $X_1$ and $X_2$ are independent if the joint
+density is the product of marginal densities.
 
+If $X_1$ and $X_2$ are independent and $\E[u(X_1)]$ and $\E[v(X_2)]$ exist, then it 
+is the case that $\E[u(X_1)v(X_2)] = \E[u(X_1)]\cdot \E[v(X_2)]$.
 
-
-Let $(X_1,X_2)$ have joint CDF
-  $F(x_1,x_2)$ and let $X_1$ and $X_2$ have marginal CDFs $F_1(x_1)$
-  and $F_2(x_2)$. Then $X_1$ and $X_2$ are independent if and only if 
-  \[F(x_1,x_2)= F_1(x_1) F_2(x_2),\]
-  the joint d.f. being the product of marginal d.f.s. It follows that if the corresponding
-  densities exist, $X_1$ and $X_2$ are independent if the joint
-  density is the product of marginal densities.
-
-  If $X_1$ and $X_2$ are independent and $\E[u(X_1)]$ and $\E[v(X_2)]$ exist, then
-$\E[u(X_1)v(X_2)] = \E[u(X_1)]\cdot \E[v(X_2)]$.
-
+If $X$ and $Y$ are random variables, $\E\!\left[\E[Y|X]\right] = \E[Y]$, known as the law of
+\textbf{iterated expectations}.
 
 
 For complete generality, let $Y_1=u_1(X_1,X_2)$ and $Y_2=u_2(X_1,X_2)$ be
@@ -526,6 +529,13 @@ least twice differentiable functions functions $m\!\!\!:\!\!\SR \rightarrow \SR$
 exists a number $\xi$ between $0$ and $t$ such that \[ m(t) = m(0) + m'(0) t +
 \frac{1}{2} m''(\xi) t^2.\]
 
+In analysis, the \textbf{indicator function} is defined as 
+\[ 1_{X\in S} = \begin{cases} 1 & \text{if $X\in S$,} \\ 0 & \text{if $X\notin S$,}\end{cases}\]
+and is often useful for stating results (related to the ``dummy variable'' concept in applied work).
+
+When $u=u(x)$ and $v=v(x)$, then the \textbf{product rule of differentiation}
+says that $(u v)' = u'v + u v'$,  and \textbf{integration by parts} is the reverse statement---that
+\[\int u \rd v = u v - \int v \rd u. \]
 
 \section{Some calculating rules for $P$, $\E$, $\var$ and $\cov$}
 Let $A$ and $B$ be some events; $X$, $Y$, and $Z$ are random variables.
@@ -533,8 +543,8 @@ Let $A$ and $B$ be some events; $X$, $Y$, and $Z$ are random variables.
 \item $P(A) = 1 - P(A^c)$.
 \item $P(A) = P(A\cap B) + P(A\cap B^c)$.
 \item $P(A\cup B) = P(A) + P(B) - P(A\cap B)$.
-\item $P(A\cap B) \leq \min\{P(A), P(B)\}$.
 \item $P(A \cap B) = P(A)P(B|A)$.
+\item $P(A\cap B) \leq \min\{P(A), P(B)\}$.
 \item $\E\left[\E[Y|X]\right] = \E[Y]$.
 \item $\E[a + bX ] = a + b\E[X]$.
 \item $\E[a X + b Y] = a\E[X] + b\E[Y]$.
