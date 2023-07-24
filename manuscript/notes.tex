@@ -9,7 +9,8 @@
 %\pagestyle{empty}\thispagestyle{empty}
 
 \title{Compact notes on probability and statistics}
-\author{Erik Ø. Sørensen}
+\author{Erik Ø. Sørensen\thanks{FAIR, Department of Economics, NHH Norwegian
+School of Economics. \texttt{erik.sorensen@nhh.no}}}
 
 \input{commands.tex}
 
@@ -20,6 +21,8 @@
 \sloppy
 \frenchspacing
 
+\noindent If (when) you find a typo, an error, or an inconsistency,
+please register an issue or a pull request at \url{https://github.com/ErikOSorensen/CompactNotes}.
 
 
 \tableofcontents
@@ -28,8 +31,7 @@
 \noindent This set of compact notes is written to support the August method camp
 in probability and statistics for new PhD students at NHH Norwegian School of
 Economics, and is in no way intended to replace a proper book on the topics or
-be subject to independent study. If (when) you find a typo, an error, or an inconsistency,
-please register an issue or a pull request at \url{https://github.com/ErikOSorensen/CompactNotes}.
+be subject to independent study. 
 
 This set of notes relies a lot on the two books
 I have used for teaching in the last decade: \citet{Hogg2013} is good a general 
@@ -63,7 +65,7 @@ $\sigma$-algebra. Some authors use the term $\sigma$-\emph{field} to refer to a 
 
 A function $P\!\!:\calA \rightarrow \SR$ is a \textbf{probability set function}  if $P(A)\geq0$ for
 all $A\in\calA$; $P(\emptyset)=0$; $P(\calS)=1$, and if $A_1,A_2,\dots$ is a
-series of \textbf{disjoint} sets ($A_i\cap A_j\emptyset$ when $i\neq j$), then
+series of \textbf{disjoint} sets ($A_i\cap A_j=\emptyset$ when $i\neq j$), then
 $P(\cup_{i=1}^\infty A_i)=\sum_{i=1}^\infty P(A_i)$. The triple
 $(\calS,\calA,P)$ is called a \textbf{probability space}.
 
@@ -99,7 +101,8 @@ Now the probability measure $P_X$ is defined $P_X(B) = P(X^{-1}(B))$.
 
 It is customary to use capital roman letters to refer to random variables, but
 lower case letters to refer to particular values (numbers), such that $X(s)=x$
-is the statement that at $s\in\calS$, the random variable $X$ takes on the value $x$.
+is the statement that at $s\in\calS$, the random variable $X$ (a function) takes on the value $x$ (a number,
+$x\in\SR$).
 
 \subsection{Distribution}
 A random variable $X$ is said to have a \textbf{distribution function} (d.f.) $F_X$
@@ -107,7 +110,7 @@ such that \[ F_X(s) = P_X((-\infty, s])=P(\{a: X(a)\leq s\}).\] When the derivat
 distribution function exists, it is called the \textbf{density} of $X$, and
 $f_X(s)=F'_X(s)$. We then say $X$ is distributed \textbf{continuously}. General
 properties: $f_X(s)\geq0$, $\int_a^b f_X(s)\rd s = P(X\in[a,b])$, and
-$\int_{-\infty}^\infty f_X(s) \rd s = 1$. When clear from context, we drop the
+$\int_{-\infty}^\infty f_X(s) \rd s = 1$. When it is clear from the context, we drop the
 subscripts (and sometimes also the limits of integration): $\int\! f(s)\rd s=1$.
 If $X$ and $Y$ have distribution functions $F_X$ and $F_Y$ and $F_X(s)=F_Y(s)$ for all
 $s$, $X$ and $Y$ are \textbf{identically distributed}, but they are not necessarily the
@@ -122,9 +125,10 @@ with pdf $f(x)$ and
 \(\int_{-\infty}^\infty |x|f(x) \rd x < \infty,\)
 the \textbf{expectation} of $X$ exists as  
 \[\E[X] = \int_{-\infty}^\infty xf(x) \rd x.\]
+If the set of outcomes is bounded ($\min(X)> -\infty$ and $\max(X) < \infty$), 
+the expectation always exists.
 If $Y$ is a discrete random variable with pmf $p_Y$, 
-$\E[Y]=\sum_y yp_Y(y)$.
-
+$\E[Y]=\sum_y yp_Y(y)$. 
 Having different expressions for discrete and continuous random variables is awkward, since
 sometimes we need to do theory for mixed variables or variables where we don't know the 
 distribution. To find a more general way to express expectations, we need to extend
@@ -138,7 +142,7 @@ is $\E [ (X-\mu)^k]$.
 
 The function expectation $m_X(t)=\E[\exp(tX)]$ is called the \textbf{moment
 generating function} when it exists (is finite) in an open ball around zero. When it exists,
-$m'(0)=\E[X]$, $m''(0)=\E[X^2]$ and $m^k(0)=\E[X^k]$, and it completely
+$m'(0)=\E[X]$, $m''(0)=\E[X^2]$ and $m^k(0)=\E[X^k]$, and the moment generating function completely
 characterizes the distribution of $X$. For long tail distributions, the moment generating
 functions does not exist (example: log-normal distribution). Even when the moment generating function
 does not exist, the \textbf{characteristic function} always exist, which is very similar but
@@ -162,7 +166,7 @@ then $ \phi(E[X]) \leq E[\phi(X)]$ (\textbf{Jensen}).
 \end{enumerate}
 
 \subsection{Common distributions}
-There are some distributions we are expected to know about:
+There are some distributions that are nice to recognize:
 
 \begin{description}
 \item[Uniform] A uniform distribution on $[a,b]$ is written $U(a,b)$, has a density $1/(b-a)$ on $[a,b]$ and 
@@ -190,7 +194,7 @@ handbooks written with properties of various distributions.
 \subsection{Functions of random variables}
 If $X$ is a random variable and $g$ is a function, $Y=g(X)$ is another random variable.
 
-In Figure~\ref{fig:frv}a, $Y=g(X)$ is an increasing function. 
+In Figure~\ref{fig:frv}a, $Y=g(X)$ is an increasing function (one-to-one). 
 Considering the distribution of $Y$, 
 the distribution function for $Y$ is $F_Y(y) = P(Y\leq y)$. We can substitute
 the definition of $Y$ into this: $F_Y(y) = P(g(X)\leq y)$, where this
@@ -199,16 +203,17 @@ the substitutions, $P(g(X) \leq y) = P( g^{-1}(g(X)) \leq g^{-1}(y)) = P(X\leq g
 and we can conclude that $F_Y(y)= F_X(g^{-1}(y))$. The density follows by differentiation, 
 $f_Y(y) = f_X(g^{-1}(y)) \rd g^{-1}(y)/\rd y$.
 
-If instead $Y=h(X)$ and $h$ is decreasing (as in Figure ~\ref{fig:frv}b), we
+If instead $Y=h(X)$ and $h$ is decreasing and one-to-one (as in Figure ~\ref{fig:frv}b), we
 start with a different inequality: If $h(X) \leq y$, then $X\geq h^{-1}(y)$,
 and $F_Y(y) = P(X\geq h^{-1}(y)) = 1 - P(X\leq h^{-1}(y)) = 1 - F_X(h^{-1}(y))$.
 Either way, for increasing or decreasing $g$'s, taking derivatives we find that 
 $f_Y(y) = f_X(g^{-1}(y)) \cdot | \rd g^{-1}(y)/\rd y|$.
 The absolute value of the derivative controls for whether $g$ is increasing or decreasing.
 
-For a function that is increasing on the subset $A$ and decreasing on $B$, we would use the
-law of total probability, $P(Y\leq y)= P(Y\leq y , X\in A) + P(Y\leq y , X\in B)$ and 
-calculate each terms separately (with their own inverses). 
+For a function that is not one-to-one, but increasing on the subset $A$ and decreasing on $B$, we would use the
+law of total probability, \[F_Y(y) = P(Y\leq y)= P(Y\leq y , X\in A) + P(Y\leq y , X\in B),\] and 
+calculate each terms separately. See exercise 11 in the second
+set for an example of this.
 
 \begin{figure}[tb]
 \includegraphics[width=0.95\textwidth]{../graphs/transformation_of_RV}
@@ -294,6 +299,8 @@ empirical analog equal to the same in the sample.
   \E[g(X;\theta)] &= 0, \tag{theory} \\
   \frac{1}{n}\sum_{i=1}^n g(x_i;\widehat{\theta}) &= 0. \tag{analog} 
 \end{align}
+The second expression is a concrete equation that can be solved by analytical 
+or computational methods for $\widehat{\theta}$ as a function of the data $(x_1,x_2,\dots,x_n)$.
 An example: To estimate the expectation of $X$, choose $g(X;\mu)=X-\mu$.
 The solution is quite trivial, $\widehat{\mu} = n^{-1}\sum X_i$,
 often written $\widehat{\mu}=\overline{X}_n$. 
