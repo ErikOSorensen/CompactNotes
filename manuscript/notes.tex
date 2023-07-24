@@ -28,7 +28,8 @@
 \noindent This set of compact notes is written to support the August method camp
 in probability and statistics for new PhD students at NHH Norwegian School of
 Economics, and is in no way intended to replace a proper book on the topics or
-be subject to independent study.
+be subject to independent study. If (when) you find a typo, an error, or an inconsistency,
+please register an issue or a pull request at \url{https://github.com/ErikOSorensen/CompactNotes}.
 
 This set of notes relies a lot on the two books
 I have used for teaching in the last decade: \citet{Hogg2013} is good a general 
@@ -58,19 +59,22 @@ require that if $A\in\calS$ then $A^c\in\calA$; if $A\in\calA$ and $B\in\calA$
 then $A\cup B$ is also in $\calA$. This defines an \textbf{algebra}. We also
 require that taking  if $A_1,A_2,\dots\in \calA$, then $\cup_{i=1}^\infty A_i
 \in \calA$, this last requirement is what restricts $\calA$ to a
-$\sigma$-algebra. Some authors reference a $\sigma$-algebra as a $\sigma$-\emph{field}.
+$\sigma$-algebra. Some authors use the term $\sigma$-\emph{field} to refer to a $\sigma$-algebra.
 
-$P$ is a \textbf{probability set function} if $P(A)\geq0$ for all $A\in\calA$; $P(\emptyset)=0$; $P(\calS)=1$,
-and if $A_1,A_2,\dots$ is a series of \textbf{disjoint} sets ($A_i\cap A_j\emptyset$ when $i\neq j$), then
-$P(\cup_{i=1}^\infty A_i)=\sum_{i=1}^\infty P(A_i)$. 
-The triple $(\calS,\calA,P)$ is called a \textbf{probability space}.
+A function $P\!\!:\calA \rightarrow \SR$ is a \textbf{probability set function}  if $P(A)\geq0$ for
+all $A\in\calA$; $P(\emptyset)=0$; $P(\calS)=1$, and if $A_1,A_2,\dots$ is a
+series of \textbf{disjoint} sets ($A_i\cap A_j\emptyset$ when $i\neq j$), then
+$P(\cup_{i=1}^\infty A_i)=\sum_{i=1}^\infty P(A_i)$. The triple
+$(\calS,\calA,P)$ is called a \textbf{probability space}.
 
-With a discrete sample space, we will often work with the set of all subsets as the relevant 
-$\sigma$-algebra. The set of all subsets is also referred to as the \textbf{power set} and written $2^\calS$.
-If the sample space is continuous (like the set of all real numbers), there are technical difficulties
-working with the power set; the power set of $\SR$ is not a $\sigma$-algebra. Instead, for real numbers 
-we work with subsets that are open intervals, $\calB = \{(a,b), \ a,b\in\SR\}$. Using all sets of type $\calB$,
-and the countable unions and complements of these sets, we can define the \textbf{Borel $\sigma$-algebra}.
+With a discrete sample space, we will often work with the set of all subsets as
+the relevant $\sigma$-algebra. The set of all subsets is also referred to as the
+\textbf{power set} and written $2^\calS$. If the sample space is continuous
+(like the set of all real numbers), there are technical difficulties working
+with the power set; the power set of $\SR$ is not a $\sigma$-algebra. Instead,
+for real numbers we work with subsets that are open intervals, $\calB = \{(a,b),
+\ a,b\in\SR\}$. Using all sets of type $\calB$, and the countable unions and
+complements of these sets, we can define the \textbf{Borel $\sigma$-algebra}.
 
 For $A$ and $B$ in $\calA$, we define the \textbf{conditional probability} of $A$ given $B$
 as \[ P(A|B) = P(A\cap B)/P(B),\] when $P(B)>0$. From the definition, we can find 
@@ -105,6 +109,9 @@ $f_X(s)=F'_X(s)$. We then say $X$ is distributed \textbf{continuously}. General
 properties: $f_X(s)\geq0$, $\int_a^b f_X(s)\rd s = P(X\in[a,b])$, and
 $\int_{-\infty}^\infty f_X(s) \rd s = 1$. When clear from context, we drop the
 subscripts (and sometimes also the limits of integration): $\int\! f(s)\rd s=1$.
+If $X$ and $Y$ have distribution functions $F_X$ and $F_Y$ and $F_X(s)=F_Y(s)$ for all
+$s$, $X$ and $Y$ are \textbf{identically distributed}, but they are not necessarily the
+same random variables.
 
 For \textbf{discrete} r.v., we define the \textbf{probability mass function} (pmf) as
 $p_X(s) = P(X\in\{s\})$ for $s\in\calS$. This is analogous to the density function.
@@ -281,18 +288,22 @@ known as a \textbf{random sample} of size $n$ of the variable $X$.
 
 For estimation, we would like to have some rules to uncover empirical analogs
 to theoretically defined parameters. The \textbf{analog principle} is to 
-start with a theoretically defined parameter (such as $\mu=\E[X]$) and set its
-empirical analog equal to this in the sample. The simple average is is the
-empirical analog of an expectation, the sample mean sum square is the empirical
-analog of variance and so on. 
+start with a theoretically defined parameter and set its
+empirical analog equal to the same in the sample. 
+\begin{align}
+  \E[g(X;\theta)] &= 0, \tag{theory} \\
+  \frac{1}{n}\sum_{i=1}^n g(x_i;\widehat{\theta}) &= 0. \tag{analog} 
+\end{align}
+An example: To estimate the expectation of $X$, choose $g(X;\mu)=X-\mu$.
+The solution is quite trivial, $\widehat{\mu} = n^{-1}\sum X_i$,
+often written $\widehat{\mu}=\overline{X}_n$. 
 
-For the expectation case, the analog principle is to set $\widehat{\mu} = n^{-1}\sum X_i$,
-often written $\overline{X}_n$. For a simple regression model,
+Similarly, for a simple regression model,
 \[ Y_i = \alpha + \beta X_i + \varepsilon_i,\] the core assumption is that $\cov[\varepsilon_i,X_i]=0$.
 Reformulating, $\cov[Y_i - (\alpha + \beta X_i), X_i]$, or that $\cov[Y_i,X_i] = \beta \var[X_i]$.
 The empirical analog of this is that
 \[ \widehat{\cov[X_i,Y_i]} = \widehat{\beta} \widehat{\var[X_i]},\]
-with the rule that $\widehat{A}$ always mean ``empirical estimate of $A$.'' This equation
+with the rule that $\widehat{A}$ always mean ``(the empirical) estimate of $A$.'' This equation
 is easily solved for $\widehat{\beta} = \widehat{\cov[X_i,Y_i]} / \widehat{\var[X_i]}$. To find
 $\widehat{\alpha}$ use the same kind of procedure for the theoretical moment $\E[\varepsilon_i]=0$. This kind
 of application of the analog principle is called \textbf{method of moments}. Note
@@ -330,23 +341,22 @@ be true.
 The distribution of $X$ is $f(x;\theta)$, with parameter
 $\theta\in\Omega$, and our ideas about truth can be described by
 regions of $\Omega$:
-\[ H_0: \theta\in\omega_0 \quad \text{vs $H_1: \theta\in\omega_1$.}
+\[ H_0: \theta\in\omega_0 \quad \text{vs $H_{\!A}: \theta\in\omega_A$.}
 \]
 
 Our task is, based on a sample from the distribution of $X$, determine
 whether to keep on insisting on $H_0$ or reject that in favor of
-$H_1$. What we want is often to fix the probability of Type I error
+$H_{\!A}$. What we want is often to fix the probability of Type I error
 (``significance level'') to $\alpha=0.01,0.05,\dots$, and conditional
 on that, minimize probability of type II error. By \textbf{Type I error} we mean that
 a null hypothesis is rejected when the null is true; by \textbf{Type II error} we mean
 that the null hypothesis is not rejected even though the null is false.
 
-Strictly speaking, we decide on a regions of $(X_1,\dots,X_n)\in C$ in
-which to accept or reject $H_0$, but in practice we define
-test-statistics $T_n(X_1,\dots,X_n)$ and decide on regions of the test
-statistics.
-Instead of reporting reject/accept with a given $\alpha$-criterion, papers often report $p$-values (but with
-implied fixed $\alpha$). 
+Strictly speaking, we decide on a regions of $(X_1,\dots,X_n)\in C$ in which to
+accept or reject $H_0$, but in practice we define test-statistics
+$T_n(X_1,\dots,X_n)$ and decide on regions of the test statistics. Instead of
+reporting reject/accept with a given $\alpha$-criterion, papers often report
+$p$-values (but with implied fixed $\alpha$). 
 
 \textbf{P-values} are the probability of at least as extreme data given $H_0$,
 \[ P( \text{data}| H_0).\]
@@ -379,17 +389,17 @@ we consider---or calculate for a range of alternative hypotheses.
 Power is the probability of a significant result under the alternative hypothesis, and is a good thing. 
 Among people who design experiments, it is customary to aim for power of 80\% or 90\%.
 
-Assume a simple one-sample, one-sided $t$-test against a null-hypothesis of $E[X]=0$. This will
+Assume a simple one-sample, one-sided $t$-test against a null-hypothesis of $\E[X]=\mu_0=0$. This will
 be significant at $\alpha=5\%$ when $t> 1.64$, with probability
 \[
-P\left( \frac{\overline{X}_n - \mu_0}{\sigma/\sqrt{n}} > 1.64 | E[X]=\mu_1\right) = 
-1 - \Phi\left( 1.64 - \frac{\mu_1}{\sigma/\sqrt{n}}\right).
+P\left( \frac{\overline{X}_n - \mu_0}{\sigma/\sqrt{n}} > 1.64 | E[X]=\mu_A\right) = 
+1 - \Phi\left( 1.64 - \frac{\mu_A}{\sigma/\sqrt{n}}\right).
 \]
-Only the ratio $\mu_1/\sigma$, often known as the \textbf{effect size}  $\delta$, and the sample
+Only the ratio $\delta=(\mu_A-\mu_0)/\sigma$---the \textbf{effect size}---and the sample
 size matters.
 
 In Figure~\ref{fig:power} we see the power of a two-sided, two-sample $t$-test
-of $\mu=0$ at different alternative hypotheses about the effect size and at
+of $\mu_0=0$ at different alternative hypotheses about the effect size and at
 different total sample size. Measuring moderate effect sizes require large sample
 sizes to have the power that most consider appropriate (at 0.8 and above). 
 
@@ -401,23 +411,26 @@ size and sample size varies ($\alpha=0.05$)}\label{fig:power}
 \end{figure}
 
 
-If we analyze classical hypothesis testing with Bayesian methods, we can uncover some
-unsettling consequences of how low power affects statistical inference. 
-Consider Figure~\ref{fig:B}. We encode our prior knowledge as $p$, our belief that
-nature made the alternative hypothesis true, while $1-p$ is our belief about
-the probability that $H_0$ is true. We cannot observe if we are at the $H_0$ or $H_A$ node,
-but if we are at $H_0$ we reject with probability $\alpha$, the level of significance for our
-test (a type-I error). If we are at $H_A$, we reject with probability $\gamma$, the power of the
-test. Rejecting $H_0$, the Bayesian posterior belief in $H_A$ is
+If we analyze classical hypothesis testing with Bayesian methods, we can uncover
+some unsettling consequences of how low power affects statistical inference.
+Consider Figure~\ref{fig:B}: we encode our prior knowledge as $p$, our belief
+that nature made the alternative hypothesis true, while $1-p$ is our belief
+about the probability that $H_0$ is true. We cannot tell if we are at the
+$H_0$ or at the $H_A$ node, but if we are at $H_0$ we reject with probability $\alpha$,
+the level of significance for our test (a type-I error). If we are at $H_{\!A}$, we
+reject with probability $\gamma$, the power of the test. Rejecting $H_0$, the
+Bayesian posterior belief in $H_{\!A}$ is
 \begin{align*}
-   P(H_A|\mathrm{Reject} H_0) & = \frac{P(\mathrm{Reject} H_0|H_A) \cdot P(H_A)}{P(\mathrm{Reject} H_0} \\
+   P(H_{\!A}|\mathrm{Reject} H_0) & = \frac{P(\mathrm{Reject} H_0|H_{\!A}) \cdot P(H_{\!A})}{P(\mathrm{Reject} H_0)} \\
    &= \frac{p\gamma}{(1-p)\alpha + p\gamma}.  
 \end{align*}
 
-Consider a surprising result ($p=0.1$) in an underpowered study ($\gamma=0.5$), our posterior belief
-in $H_A$ should not be very strong: $0.1\cdot 0.5 / (0.9\cdot 0.05 + 0.1\cdot 0.5) = 0.53$.
-For this reason there are people who advocate for much stricter $\alpha$: \citet{Benjamin2017} argue
-for using $\alpha=0.005$ as a conventional level instead of $0.05$. 
+Consider a surprising result ($p=0.1$) in an underpowered study ($\gamma=0.5$),
+our posterior belief in $H_{\!A}$ should not be very strong: $0.1\cdot 0.5 /
+(0.9\cdot 0.05 + 0.1\cdot 0.5) = 0.53$. For this reason some people argue for a
+much stricter $\alpha$: \citet{Benjamin2017} argue that we should use
+$\alpha=0.005$ as a conventional level instead of $0.05$ (in this example, using
+$\alpha=0.005$ would give us $P(H_{\!A}|\mathrm{Reject} H_0)=0.92$). 
 
 \begin{figure}[tb]
   \begin{center}
@@ -445,7 +458,7 @@ $\plim \overline{X}_n=\mu$. (Weak law of large numbers)
 
 There are a number of results about how probability limits work:
 \begin{enumerate}
-\item Suppose $\plim X_n=X$ and $\plim Y_n=Y$. Then $\plim X_n+Y_n = X+Y$.
+\item Suppose $\plim X_n=X$ and $\plim Y_n=Y$. Then $\plim \left(X_n+Y_n\right) = X+Y$.
 \item Suppose $\plim X_n=X$ and $a$ is a constant. Then $\plim a X_n = aX$.
 \item Suppose $\plim X_n=a$ and the function $g$ is continuous at $a$. Then $\plim g(X_n)=g(a)$.
 \item Suppose $\plim X_n=X$ and $\plim Y_n=Y$, then $\plim X_nY_n=XY$.
@@ -540,7 +553,8 @@ says that $(u v)' = u'v + u v'$,  and \textbf{integration by parts} is the rever
 \[\int u \rd v = u v - \int v \rd u. \]
 
 \section{Some calculating rules for $P$, $\E$, $\var$ and $\cov$}
-Let $A$ and $B$ be some events; $X$, $Y$, and $Z$ are random variables.
+Let $A$ and $B$ be some events; $X$, $Y$, and $Z$ are random variables; $a$ and $b$
+are constants.
 \begin{enumerate}
 \item $P(A) = 1 - P(A^c)$.
 \item $P(A) = P(A\cap B) + P(A\cap B^c)$.
@@ -551,7 +565,7 @@ Let $A$ and $B$ be some events; $X$, $Y$, and $Z$ are random variables.
 \item $\E[a + bX ] = a + b\E[X]$.
 \item $\E[a X + b Y] = a\E[X] + b\E[Y]$.
 \item $\E[g(X)] = \int g(x) f_X(x) \rd x$.
-\item $\E[XY] = \E[X]\E[Y]$ but only when $X$ and $Y$ are \emph{independent}!
+\item $\E[XY] = \E[X]\E[Y]$ when $X$ and $Y$ are independent.
 \item $\E[|X+Y|] \leq \E[|X|] + E[|Y|]$.
 \item $\var[X] = \E[X^2] - \left(E[X]\right)^2$.
 \item $\var[\overline{X}_n] = \sigma^2 / n$.
@@ -563,10 +577,9 @@ Let $A$ and $B$ be some events; $X$, $Y$, and $Z$ are random variables.
 \item $\cov[g(X),X] = \E[g(X)X]  - \E[g(X)]\E[X]$.
 \end{enumerate}
 
-\newpage
 \addcontentsline{toc}{section}{References}
 \bibliographystyle{standard3}
-\bibliography{mmref}
+\bibliography{notes}
 
 \clearpage
 
