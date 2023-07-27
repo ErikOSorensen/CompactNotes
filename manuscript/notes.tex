@@ -1,6 +1,6 @@
-\documentclass[twoside]{article}
+\documentclass{article}
 \usepackage{geometry}
-\geometry{paperwidth=148mm,paperheight=210mm,margin=15mm}
+\geometry{paperwidth=105mm,paperheight=148.5mm,margin=9mm,includeheadfoot}
 \usepackage{graphicx}
 \usepackage{stix}
 \usepackage{url}
@@ -8,7 +8,7 @@
 \usepackage{booktabs}
 %\pagestyle{empty}\thispagestyle{empty}
 
-\title{Compact notes on probability and statistics}
+\title{Compact notes on \\ probability and statistics}
 \author{Erik Ø. Sørensen\thanks{FAIR, Department of Economics, NHH Norwegian
 School of Economics. \texttt{erik.sorensen@nhh.no}}}
 
@@ -21,34 +21,39 @@ School of Economics. \texttt{erik.sorensen@nhh.no}}}
 \sloppy
 \frenchspacing
 
-\noindent If (when) you find a typo, an error, or an inconsistency,
-please register an issue or a pull request at \url{https://github.com/ErikOSorensen/CompactNotes}.
 
 
 \tableofcontents
+
+\bigskip\bigskip
+
+\noindent If (when) you find a typo, an error, or an inconsistency,
+please register an issue or a pull request at \url{https://github.com/ErikOSorensen/CompactNotes}.
+%\clearpage
 \thispagestyle{empty}
 \newpage
 \noindent This set of compact notes is written to support the August method camp
 in probability and statistics for new PhD students at NHH Norwegian School of
-Economics, and is in no way intended to replace a proper book on the topics or
+Economics. The intention is not to replace a proper book on the topic or
 be subject to independent study. 
 
-This set of notes relies a lot on the two books
-I have used for teaching in the last decade: \citet{Hogg2013} is good a general 
-mathematical statistics textbook, 
-\citet{Linton2017} is more compact and aimed at training econometricians. When it comes to the statistics part, econometrics textbooks
+This set of notes relies a lot on the two books I have used for teaching in the
+last decade: \citet{Hogg2013} is a good  general mathematical statistics
+textbook; \citet{Linton2017} is more compact and specifically aimed at training
+econometricians. When it comes to the statistics part, econometrics textbooks
 will probably be sufficient for almost everyone. For those that need a more
-theoretical grounding, a first escalation might be \citet{Rosenthal2006}; the
-level of rigour of \citet{Billingsley1995} should be sufficiently high for
-everyone. For topics in probability and statistics, Wikipedia can also be quite good.
+theoretical grounding to probability theory, a first escalation might be
+\citet{Rosenthal2006}; the level of rigour of \citet{Billingsley1995} should be
+sufficiently high for everyone. For topics in probability and statistics,
+Wikipedia can also be quite good.
 
 We will not cover software in the Method Camp, but you can never go wrong by
 having a look at \citet{Wickham2017} and their introduction to modern~R (emphasizing
-the datawrangling for statistics).
+data wrangling for applied work).
 
 
 \section{Probability}
-Modern probability theory (since the 1930s) is defined in terms of set theoretic
+Probability theory is defined in terms of set theoretic
 notions. 
 Let us define a \textbf{sample space} of all possible outcome of some
 event (a set). Example, role of a die: $\calS =\{1,2,3,4,5,6\}$. 
@@ -64,7 +69,7 @@ require that taking  if $A_1,A_2,\dots\in \calA$, then $\cup_{i=1}^\infty A_i
 $\sigma$-algebra. Some authors use the term $\sigma$-\emph{field} to refer to a $\sigma$-algebra.
 
 A function $P\!\!:\calA \rightarrow \SR$ is a \textbf{probability set function}  if $P(A)\geq0$ for
-all $A\in\calA$; $P(\emptyset)=0$; $P(\calS)=1$, and if $A_1,A_2,\dots$ is a
+all $A\in\calA$; $P(\emptyset)=0$; $P(\calS)=1$; and if $A_1,A_2,\dots$ is a
 series of \textbf{disjoint} sets ($A_i\cap A_j=\emptyset$ when $i\neq j$), then
 $P(\cup_{i=1}^\infty A_i)=\sum_{i=1}^\infty P(A_i)$. The triple
 $(\calS,\calA,P)$ is called a \textbf{probability space}.
@@ -85,19 +90,22 @@ as
 \[ P(B|A) = \frac{ P(A|B)\cdot P(B)}{P(A)}.\]
 
 If $A$ and $B$ are events with positive probability, $A$ and $B$ are \textbf{independent} if
-$P(A\cap B) = P(A)\cdot P(B)$, $P(A|B)=P(A)$, and $P(B|A)=P(B)$ (all equivalent). Independence
+$P(A\cap B) = P(A)\cdot P(B)$, $P(A|B)=P(A)$, and $P(B|A)=P(B)$, these are equivalent
+conditions. Independence
 is symmetric but not transitive: If $A$ and $B$ are independent and $B$ and $C$ are independent,
 it does not follow that $A$ and $C$ are independent.
 
 \section{Random variables}
 
 A \textbf{random variable}  (r.v.) is a function from a sample space to the real numbers,
-$X\!\!: \calS \rightarrow \SR$. The probability space on $\calS$ maps to a new
-probability space on $\SR$. There are technical requirements:
+$X\!\!: \calS \rightarrow \calS_X$, with $\calS_X\subset \SR$. There are technical requirements:
 $X$ must be \textbf{measurable},
 \[ \calA_X = \{A\subset S: X(A) \in \calB\} = \{X^{-1}(B): B\in \calB\}\subseteq \calA.\]
-Here $\calB$ is a $\sigma$-algebra on $\SR$ and $\calA$ is the $\sigma$-algebra on $\calS$.
-Now the probability measure $P_X$ is defined $P_X(B) = P(X^{-1}(B))$.
+Here $\calB$ is a $\sigma$-algebra on $\calS_X\subset\SR$ and $\calA$ is the $\sigma$-algebra on $\calS$.
+Now the probability measure $P_X$ is defined $P_X(B) = P(X^{-1}(B))$, and we have mapped
+the probability space $(\calS,\calA,P)$ to the probability space $(\calS_X,\calB,P_X)$.
+
+
 
 It is customary to use capital roman letters to refer to random variables, but
 lower case letters to refer to particular values (numbers), such that $X(s)=x$
@@ -107,10 +115,10 @@ $x\in\SR$).
 \subsection{Distribution}
 A random variable $X$ is said to have a \textbf{distribution function} (d.f.) $F_X$
 such that \[ F_X(s) = P_X((-\infty, s])=P(\{a: X(a)\leq s\}).\] When the derivative of the
-distribution function exists, it is called the \textbf{density} of $X$, and
-$f_X(s)=F'_X(s)$. We then say $X$ is distributed \textbf{continuously}. General
-properties: $f_X(s)\geq0$, $\int_a^b f_X(s)\rd s = P(X\in[a,b])$, and
-$\int_{-\infty}^\infty f_X(s) \rd s = 1$. When it is clear from the context, we drop the
+distribution function exists, it is called the \textbf{density} (pdf) of $X$, written
+$f_{\!X}(s)=F'_X(s)$. We then say $X$ is distributed \textbf{continuously}. General
+properties: $f_{\!X}(s)\geq0$, $\int_a^b f_{\!X}(s)\rd s = P(X\in[a,b])$, and
+$\int_{-\infty}^\infty f_{\!X}(s) \rd s = 1$. When it is clear from the context, we drop the
 subscripts (and sometimes also the limits of integration): $\int\! f(s)\rd s=1$.
 If $X$ and $Y$ have distribution functions $F_X$ and $F_Y$ and $F_X(s)=F_Y(s)$ for all
 $s$, $X$ and $Y$ are \textbf{identically distributed}, but they are not necessarily the
@@ -120,10 +128,10 @@ For \textbf{discrete} r.v., we define the \textbf{probability mass function} (pm
 $p_X(s) = P(X\in\{s\})$ for $s\in\calS$. This is analogous to the density function.
 
 \subsection{Expectation of a random variable}
-If $X$ is a continuous r.v.
+If $X$ is a continuous random variable
 with pdf $f(x)$ and 
 \(\int_{-\infty}^\infty |x|f(x) \rd x < \infty,\)
-the \textbf{expectation} of $X$ exists as  
+the \textbf{expectation} of $X$ exists and is  
 \[\E[X] = \int_{-\infty}^\infty xf(x) \rd x.\]
 If the set of outcomes is bounded ($\min(X)> -\infty$ and $\max(X) < \infty$), 
 the expectation always exists.
@@ -136,32 +144,32 @@ our notion of \emph{integration}, this is outside the scope of our method camp. 
 see expressions such at $\E[X]=\int\! x \rd F_X(x)$
 or even $E[X]=\int_\Omega X(\omega) P(\rd \omega)$.
 
-The k-th \textbf{moment} of $X$ is $\E [X^k]$ (when it exists).  We often write $\mu=\E[X]$ (the \textbf{mean}) and
-$\sigma^2 = \E[(X-\mu)^2]$ (the \textbf{variance}). The k-th \textbf{central moment} 
+The $k$-th \textbf{moment} of $X$ is $\E [X^k]$ (when it exists).  We often write $\mu=\E[X]$ (the \textbf{mean}) and
+$\sigma^2 = \E[(X-\mu)^2]$ (the \textbf{variance}). The $k$-th \textbf{central moment} 
 is $\E [ (X-\mu)^k]$.
 
 The function expectation $m_X(t)=\E[\exp(tX)]$ is called the \textbf{moment
-generating function} when it exists (is finite) in an open ball around zero. When it exists,
+generating function} (mgf) when it exists (finite) in an open ball around zero. When the mgf exists,
 $m'(0)=\E[X]$, $m''(0)=\E[X^2]$ and $m^k(0)=\E[X^k]$, and the moment generating function completely
-characterizes the distribution of $X$. For long tail distributions, the moment generating
+characterizes the distribution of $X$. For a number of interesting distributions the moment generating
 functions does not exist (example: log-normal distribution). Even when the moment generating function
-does not exist, the \textbf{characteristic function} always exist, which is very similar but
-involves complex numbers: $\phi_X(t)= \E[\exp(i t X)]$, with  $i = \sqrt{-1}$. The characteristic
-function always exist, and can completely characterize any distribution. 
+does not exist, a variation called the \textbf{characteristic function} always exist, 
+this is defined with complex numbers: $\phi_X(t)= \E[\exp(i t X)]$, with  $i = \sqrt{-1}$. 
+The characteristic function always exist, and completely characterizes any distribution. 
 
 \subsection{Expectation results}
 \begin{enumerate}
 \item Let $X$ be a random variable and let $m$ be a positive integer. 
-Suppose that $E[X^m]$ exists. If $k$ is an integer and $k < m$, then
+Suppose that $E[X^m]$ exists. If $k$ is a positive integer and $k < m$, then
 $E[X^k]$ exists.
 \item Let $u(X)$ be a nonnegative function of the random variable $X$. If
 $E[u(X)]$ exists, then for every positive constant $c$,
-$P(u(X)\geq c) \leq \frac{E[u(X)]}{c}$ (\textbf{Markov}).
+$P(u(X)\geq c) \leq \E[u(X)]/c$ (\textbf{Markov}).
 \item Let the random variable $X$ have a distribution with
 finite variance $\sigma^2$. Then for every $k>0$, 
-$P(|X-\mu|\geq k\sigma) \leq \frac{1}{k^2}$ (\textbf{Chebyshev}).
-\item If $\phi$ is convex on an open interval $I$ and $X$ is a random
-variable whose support is contained in $I$ and has finite expectation,
+$P(|X-\mu|\geq k\sigma) \leq 1/k^2$ (\textbf{Chebyshev}).
+\item If $\phi$ is convex on an open interval $I$ and $X$ is a random variable
+with finite expectation and support in $I$,
 then $ \phi(E[X]) \leq E[\phi(X)]$ (\textbf{Jensen}).
 \end{enumerate}
 
@@ -206,14 +214,15 @@ $f_Y(y) = f_X(g^{-1}(y)) \rd g^{-1}(y)/\rd y$.
 If instead $Y=h(X)$ and $h$ is decreasing and one-to-one (as in Figure ~\ref{fig:frv}b), we
 start with a different inequality: If $h(X) \leq y$, then $X\geq h^{-1}(y)$,
 and $F_Y(y) = P(X\geq h^{-1}(y)) = 1 - P(X\leq h^{-1}(y)) = 1 - F_X(h^{-1}(y))$.
-Either way, for increasing or decreasing $g$'s, taking derivatives we find that 
+Either way, for increasing or decreasing transformations $g$, taking derivatives we find that 
 $f_Y(y) = f_X(g^{-1}(y)) \cdot | \rd g^{-1}(y)/\rd y|$.
 The absolute value of the derivative controls for whether $g$ is increasing or decreasing.
 
-For a function that is not one-to-one, but increasing on the subset $A$ and decreasing on $B$, we would use the
+For a function that is not one-to-one, but increasing on the subset 
+$A$ and decreasing on $B$, we can use the
 law of total probability, \[F_Y(y) = P(Y\leq y)= P(Y\leq y , X\in A) + P(Y\leq y , X\in B),\] and 
 calculate each terms separately. See exercise 11 in the second
-set for an example of this.
+set of exercises for an example of this.
 
 \begin{figure}[tb]
 \includegraphics[width=0.95\textwidth]{../graphs/transformation_of_RV}
@@ -302,13 +311,13 @@ empirical analog equal to the same in the sample.
 The second expression is a concrete equation that can be solved by analytical 
 or computational methods for $\widehat{\theta}$ as a function of the data $(x_1,x_2,\dots,x_n)$.
 An example: To estimate the expectation of $X$, choose $g(X;\mu)=X-\mu$.
-The solution is quite trivial, $\widehat{\mu} = n^{-1}\sum X_i$,
+The solution is  $\widehat{\mu} = n^{-1}\sum X_i$,
 often written $\widehat{\mu}=\overline{X}_n$. 
 
 Similarly, for a simple regression model,
-\[ Y_i = \alpha + \beta X_i + \varepsilon_i,\] the core assumption is that $\cov[\varepsilon_i,X_i]=0$.
-Reformulating, $\cov[Y_i - (\alpha + \beta X_i), X_i]$, or that $\cov[Y_i,X_i] = \beta \var[X_i]$.
-The empirical analog of this is that
+\[ Y_i = \alpha + \beta X_i + \varepsilon_i,\] the core assumption is often that $\cov[\varepsilon_i,X_i]=0$.
+Reformulating, $\cov[Y_i - (\alpha + \beta X_i), X_i]$, or $\cov[Y_i,X_i] = \beta \var[X_i]$.
+The empirical analog of this is 
 \[ \widehat{\cov[X_i,Y_i]} = \widehat{\beta} \widehat{\var[X_i]},\]
 with the rule that $\widehat{A}$ always mean ``(the empirical) estimate of $A$.'' This equation
 is easily solved for $\widehat{\beta} = \widehat{\cov[X_i,Y_i]} / \widehat{\var[X_i]}$. To find
@@ -320,7 +329,7 @@ to the expected first order condition of a least-square minimization.
 Often what seems like different approaches end up as equivalent to method of moment estimation.
 An example: With \textbf{maximum likelihood}, under some regularity assumptions maximum likelihood 
 estimation is equivalent to method of moments with the additional result that the expectation 
-of the \textbf{score} (the first order condition of the log likelihood) is zero. But in general,
+of the \textbf{score}, the first order condition of the log likelihood, is zero. But in general,
 maximum likelihood is based on maximizing the probability (or density) of the data $L(\mX;\theta)$ 
 given the parameters $\widehat{\theta}$. Most of the time, we prefer to maximize the log likelihood,
 which for an iid sample is just the sum of individual log likelihoods.
@@ -361,14 +370,14 @@ that the null hypothesis is not rejected even though the null is false.
 
 Strictly speaking, we decide on a regions of $(X_1,\dots,X_n)\in C$ in which to
 accept or reject $H_0$, but in practice we define test-statistics
-$T_n(X_1,\dots,X_n)$ and decide on regions of the test statistics. Instead of
+$T_n(X_1,\dots,X_n)$ and decide on \textbf{critical regions} of the test statistics. Instead of
 reporting reject/accept with a given $\alpha$-criterion, papers often report
-$p$-values (but with implied fixed $\alpha$). 
+$p$-values. 
 
 \textbf{P-values} are the probability of at least as extreme data given $H_0$,
 \[ P( \text{data}| H_0).\]
-They do not address the likelihood of $H_0$ being true!
-In the classical inference, there are never probabilities attached to hypotheses: Hypotheses are true 
+$P$-values do not address the likelihood of $H_0$ being true.
+In the classical inference, probabilities are \emph{never} attached to hypotheses: Hypotheses are true 
 or false, and this is not a sampling issue.
 If we want to be Bayesian about hypotheses (have beliefs about them), we need to incorporate the priors: 
 \[ P(H_0|\text{data}) = \frac{ P(\text{data}|H_0) P(H_0)}{ P(\text{data}) }. \]
@@ -384,17 +393,17 @@ test if $E[X] = \mu_0$ using an expression such as
 \[
 t_n = \frac{\overline{X}_n - \mu_0}{\sigma/\sqrt{n}}.
 \]
-If we know $\sigma$, then $t_n$ would be normally distributed $N(0,1)$ under $H_0: E[X]=\mu_0$. 
+If we know $\sigma$, then $t_n$ would be normally distributed $N(0,1)$ under $H_0\!: E[X]=\mu_0$. 
 This would be true even in small samples.
 We can modify this most simple t-test in various ways.
 
 
 When we control the type-I error probability to $\alpha$ and the type-II error probability
-to $\beta$, we say that we have \textbf{power} $1-\beta$. 
+to $\beta$, we say that the \textbf{power} is $1-\beta$. 
 In order to calculate power, it is necessary to be explicit about the alternative hypothesis 
 we consider---or calculate for a range of alternative hypotheses. 
 Power is the probability of a significant result under the alternative hypothesis, and is a good thing. 
-Among people who design experiments, it is customary to aim for power of 80\% or 90\%.
+Among people who design experiments, it is customary to aim for a power of 80\% or 90\%.
 
 Assume a simple one-sample, one-sided $t$-test against a null-hypothesis of $\E[X]=\mu_0=0$. This will
 be significant at $\alpha=5\%$ when $t> 1.64$, with probability
@@ -402,13 +411,13 @@ be significant at $\alpha=5\%$ when $t> 1.64$, with probability
 P\left( \frac{\overline{X}_n - \mu_0}{\sigma/\sqrt{n}} > 1.64 | E[X]=\mu_A\right) = 
 1 - \Phi\left( 1.64 - \frac{\mu_A}{\sigma/\sqrt{n}}\right).
 \]
-Only the ratio $\delta=(\mu_A-\mu_0)/\sigma$---the \textbf{effect size}---and the sample
-size matters.
+Only the ratio $\delta=(\mu_A-\mu_0)/\sigma$, known as the \textbf{effect size}, and the sample
+size $n$ matters.
 
 In Figure~\ref{fig:power} we see the power of a two-sided, two-sample $t$-test
 of $\mu_0=0$ at different alternative hypotheses about the effect size and at
 different total sample size. Measuring moderate effect sizes require large sample
-sizes to have the power that most consider appropriate (at 0.8 and above). 
+sizes to have the power that most consider sufficient (0.8 and above). 
 
 \begin{figure}[tb]
 \includegraphics[width=\textwidth]{../graphs/powergraph}
@@ -423,7 +432,7 @@ some unsettling consequences of how low power affects statistical inference.
 Consider Figure~\ref{fig:B}: we encode our prior knowledge as $p$, our belief
 that nature made the alternative hypothesis true, while $1-p$ is our belief
 about the probability that $H_0$ is true. We cannot tell if we are at the
-$H_0$ or at the $H_A$ node, but if we are at $H_0$ we reject with probability $\alpha$,
+$H_0$ or at the $H_{\!A}$ node, but if we are at $H_0$ we reject with probability $\alpha$,
 the level of significance for our test (a type-I error). If we are at $H_{\!A}$, we
 reject with probability $\gamma$, the power of the test. Rejecting $H_0$, the
 Bayesian posterior belief in $H_{\!A}$ is
@@ -432,12 +441,12 @@ Bayesian posterior belief in $H_{\!A}$ is
    &= \frac{p\gamma}{(1-p)\alpha + p\gamma}.  
 \end{align*}
 
-Consider a surprising result ($p=0.1$) in an underpowered study ($\gamma=0.5$),
+Consider a surprising ($p=0.1$) rejection of $H_0$  in an underpowered study ($\gamma=0.5$),
 our posterior belief in $H_{\!A}$ should not be very strong: $0.1\cdot 0.5 /
 (0.9\cdot 0.05 + 0.1\cdot 0.5) = 0.53$. For this reason some people argue for a
 much stricter $\alpha$: \citet{Benjamin2017} argue that we should use
-$\alpha=0.005$ as a conventional level instead of $0.05$ (in this example, using
-$\alpha=0.005$ would give us $P(H_{\!A}|\mathrm{Reject} H_0)=0.92$). 
+$\alpha=0.005$ as a conventional level instead of $0.05$ (in this example, if we had
+the surprising result at $\alpha=0.005$, that would give us $P(H_{\!A}|\mathrm{Reject} H_0)=0.92$). 
 
 \begin{figure}[tb]
   \begin{center}
@@ -547,7 +556,7 @@ then \[ \lim_{n\rightarrow\infty} \left(1 + \frac{x}{n} + \frac{\psi(n)}{n}  \ri
 since the $\psi(n)/n$ term vanishes faster than $x/n$.
 
 A useful formulation of \textbf{Taylor's formula} is that for continuous and at
-least twice differentiable functions functions $m\!\!\!:\!\!\SR \rightarrow \SR$, there
+least twice differentiable functions functions $m\!\!:\!\!\SR \rightarrow \SR$, there
 exists a number $\xi$ between $0$ and $t$ such that \[ m(t) = m(0) + m'(0) t +
 \frac{1}{2} m''(\xi) t^2.\]
 
@@ -571,11 +580,11 @@ are constants.
 \item $\E\left[\E[Y|X]\right] = \E[Y]$.
 \item $\E[a + bX ] = a + b\E[X]$.
 \item $\E[a X + b Y] = a\E[X] + b\E[Y]$.
-\item $\E[g(X)] = \int g(x) f_X(x) \rd x$.
+\item $\E[g(X)] = \int g(x) f_{\!X}(x) \rd x$ when the density exists.
 \item $\E[XY] = \E[X]\E[Y]$ when $X$ and $Y$ are independent.
 \item $\E[|X+Y|] \leq \E[|X|] + E[|Y|]$.
 \item $\var[X] = \E[X^2] - \left(E[X]\right)^2$.
-\item $\var[\overline{X}_n] = \sigma^2 / n$.
+\item $\var[\overline{X}_n] = \var[X] / n$. 
 \item $\cov[X,Y] = \E[XY] - \E[X]\E[Y]$.
 \item $\cov[X,X] = \var[X]$.
 \item $\var[a + bX] = b^2 \var[X]$.
@@ -594,7 +603,7 @@ are constants.
   \caption{Standard normal distribution table}\label{tab:z}
 
   \medskip
-\begin{footnotesize}
+\begin{tiny}
   \begin{tabular}{rrrrrrrrrrr} 
     \toprule
       & \multicolumn{10}{c}{Add to $z$ to find $\Phi(z)$} \\
@@ -638,7 +647,7 @@ are constants.
     2.9 & $0.998$ & $0.998$ & $0.998$ & $0.998$ & $0.998$ & $0.998$ & $0.998$ & $0.999$ & $0.999$ & $0.999$ \\ 
     \bottomrule
     \end{tabular}
-  \end{footnotesize}
+  \end{tiny}
 
     \medskip
     \emph{Note:} To calculate $\Phi(z)$ for $z\geq0$, find the row using the
