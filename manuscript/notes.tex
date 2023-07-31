@@ -599,7 +599,6 @@ are constants.
 \item $\var[a + bX] = b^2 \var[X]$.
 \item $\var[a X \pm b Y] = a^2 \var[X] + b^2 \var[Y] \pm 2 a b \cov[X,Y]$.
 \item $\cov[X+Y,Z] =  \cov[X,Z] + \cov[Y,Z]$.
-\item $\cov[g(X),X] = \E[g(X)X]  - \E[g(X)]\E[X]$.
 \end{enumerate}
 
 \addcontentsline{toc}{section}{References}
@@ -615,7 +614,7 @@ are constants.
 \begin{tiny}
   \begin{tabular}{rrrrrrrrrrr} 
     \toprule
-      & \multicolumn{10}{c}{Add to $z$ to find $\Phi(z)$} \\
+      & \multicolumn{10}{c}{$s$: combine with $z$ to find cell entry $\Phi(z+s)$} \\
        \cmidrule(lr){2-11}
     $z$ & 0.00 & 0.01 & 0.02 & 0.03 & 0.04 & 0.05 & 0.06 & 0.07 & 0.08 & 0.09 \\ 
     \midrule
@@ -659,10 +658,10 @@ are constants.
   \end{tiny}
 
     \medskip
-    \emph{Note:} To calculate $\Phi(z)$ for $z\geq0$, find the row using the
-    first decimal in $z$, and find the second decimal to find the correct
-    column. For $z<0$, use the symmetry of the distribution to find  $\Phi(z) =
-    1-\Phi(-z)$. The table is calculated with the R-function \texttt{pnorm} \citep{R2023}.
+    \emph{Note:} To calculate $\Phi(x)$ for $x\geq0$, find the row using the
+    first decimal in $x$, and find the second decimal to find the correct
+    column. For $x<0$, use the symmetry of the distribution to find  $\Phi(x) =
+    1-\Phi(-x)$. The table is calculated with the R-function \texttt{pnorm} \citep{R2023}.
 \end{table}
 
 
