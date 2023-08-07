@@ -156,7 +156,7 @@ characterizes the distribution of $X$. For a number of interesting distributions
 functions does not exist (example: log-normal distribution). Even when the moment generating function
 does not exist, a variation called the \textbf{characteristic function} always exist, 
 this is defined with complex numbers: $\phi_X(t)= \E[\exp(i t X)]$, with  $i = \sqrt{-1}$. 
-The characteristic function always exist, and completely characterizes any distribution. 
+The characteristic function completely characterizes any distribution. 
 
 \subsection{Expectation results}
 \begin{enumerate}
@@ -370,17 +370,18 @@ regions of $\Omega$:
 \]
 
 Our task is, based on a sample from the distribution of $X$, determine
-whether to keep on insisting on $H_0$ or reject that in favor of
+whether to keep insisting that $H_0$ is true or reject that in favor of
 $H_{\!A}$. What we want is often to fix the probability of Type I error
 (``significance level'') to $\alpha=0.01,0.05,\dots$, and conditional
 on that, minimize probability of type II error. By \textbf{Type I error} we mean that
 a null hypothesis is rejected when the null is true; by \textbf{Type II error} we mean
-that the null hypothesis is not rejected even though the null is false.
+that the null hypothesis is not rejected even though it is false.
 
-Strictly speaking, we decide on a regions of $(X_1,\dots,X_n)\in C$ in which to
+Strictly speaking, we decide on a regions of the outcome space, $(X_1,\dots,X_n)\in C$, in which to
 accept or reject $H_0$, but in practice we define test-statistics
 $T_n(X_1,\dots,X_n)$ and decide on \textbf{critical regions} of the test statistics. Instead of
-reporting reject/accept with a given $\alpha$-criterion, papers often report
+reporting reject/accept with a given $\alpha$-criterion (often indicated
+with stars in tables), papers often report
 $p$-values. 
 
 \textbf{P-values} are the probability of at least as extreme data given $H_0$,
@@ -552,12 +553,13 @@ will often do this automatically (example: Stata's \texttt{testnl} command).
 
 \section{Selected math facts}
 In this section, there are some mathematical facts that turn out to be useful
-for probability and statistics but isn't really part of statistics itself.
+for probability and statistics but are not part of statistics itself.
 
-The \textbf{exponential function}, written $e^s$ or $\exp(s)$ is important. Can be defined by the
-series expansion \[ e^x = \sum_{k=0}^\infty \frac{x^k}{k!},\] or
-\[ e^x = \lim_{n\rightarrow \infty} \left( 1 + \frac{x}{n} \right)^n. \]
-It is also the case that  $\rd e^s / \rd s =e^s$.
+The \textbf{exponential function}, written $e^s$ or $\exp(s)$ can be defined by
+\[ e^x = \lim_{n\rightarrow \infty} \left( 1 + \frac{x}{n} \right)^n, \]
+or by the series expansion 
+\[ e^x = \sum_{k=0}^\infty \frac{x^k}{k!}.\] 
+Remember that $\rd e^s / \rd s =e^s$.
 
 
 If $\psi$ is some function such that $\psi(n) \rightarrow 0$ as $n\rightarrow\infty$,
@@ -569,9 +571,11 @@ least twice differentiable functions functions $m\!\!:\!\!\SR \rightarrow \SR$, 
 exists a number $\xi$ between $0$ and $t$ such that \[ m(t) = m(0) + m'(0) t +
 \frac{1}{2} m''(\xi) t^2.\]
 
-In analysis, the \textbf{indicator function} is defined as 
+The \textbf{indicator function} is defined as 
 \[ 1_{X\in S} = \begin{cases} 1 & \text{if $X\in S$,} \\ 0 & \text{if $X\notin S$,}\end{cases}\]
 and is often useful for stating results (related to the ``dummy variable'' concept in applied work).
+
+
 
 When $u=u(x)$ and $v=v(x)$, then the \textbf{product rule of differentiation}
 says that $(u v)' = u'v + u v'$,  and \textbf{integration by parts} is the reverse statement---that
