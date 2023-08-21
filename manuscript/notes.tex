@@ -143,7 +143,7 @@ sometimes we need to do theory for mixed variables or variables where we don't k
 distribution. To find a more general way to express expectations, we need to extend
 our notion of \emph{integration}, this is outside the scope of our method camp. But we sometimes
 see expressions such at $\E[X]=\int\! x \rd F_X(x)$
-or even $E[X]=\int_\Omega X(\omega) P(\rd \omega)$.
+or even $\E[X]=\int_\Omega X(\omega) P(\rd \omega)$.
 
 The $k$-th \textbf{moment} of $X$ is $\E [X^k]$ (when it exists).  We often write $\mu=\E[X]$ (the \textbf{mean}) and
 $\sigma^2 = \E[(X-\mu)^2]$ (the \textbf{variance}). The $k$-th \textbf{central moment} 
@@ -161,17 +161,17 @@ The characteristic function completely characterizes any distribution.
 \subsection{Expectation results}
 \begin{enumerate}
 \item Let $X$ be a random variable and let $m$ be a positive integer. 
-Suppose that $E[X^m]$ exists. If $k$ is a positive integer and $k < m$, then
-$E[X^k]$ exists.
+Suppose that $\E[X^m]$ exists. If $k$ is a positive integer and $k < m$, then
+$\E[X^k]$ exists.
 \item Let $u(X)$ be a nonnegative function of the random variable $X$. If
-$E[u(X)]$ exists, then for every positive constant $c$,
+$\E[u(X)]$ exists, then for every positive constant $c$,
 $P(u(X)\geq c) \leq \E[u(X)]/c$ (\textbf{Markov}).
 \item Let the random variable $X$ have a distribution with
 finite variance $\sigma^2$. Then for every $k>0$, 
 $P(|X-\mu|\geq k\sigma) \leq 1/k^2$ (\textbf{Chebyshev}).
 \item If $\phi$ is convex on an open interval $I$ and $X$ is a random variable
 with finite expectation and support in $I$,
-then $ \phi(E[X]) \leq E[\phi(X)]$ (\textbf{Jensen}).
+then $ \phi(\E[X]) \leq \E[\phi(X)]$ (\textbf{Jensen}).
 \end{enumerate}
 
 \subsection{Common distributions}
@@ -241,7 +241,7 @@ $X_1(s)=x_1$, $X_2(s)=x_2$. Then we say that $(X_1,X_2)$ is a
 \textbf{random vector}. 
 
 If $(X_1,X_2)$ has density $f_{X_1,X_2}(x_1,x_2)$, the \textbf{marginal density}
-of $X_1$ is  $ f_{X_1}(x_1) = \int_{-\infty}^\infty f_{X_1,X_2}(x_1,x_2)\rd x_2$.
+of $X_1$ is  $f_{X_1}(x_1) = \int_{-\infty}^\infty f_{X_1,X_2}(x_1,x_2)\rd x_2$.
 
 If $(X_1,X_2)$ is discrete, then the conditional probability of $X_1$ given $X_2$ is
 \[ p_{X_1|X_2}(x_1|x_2) = \frac{p_{X_1,X_2}(x_1,x_2)}{p_{X_2}(x_2)}, \quad \text{where
@@ -399,11 +399,11 @@ our beliefs about this parameter. Probabilities are restricted to the
 hypothesis}.
 
 If we assume that $X$ is normally distributed, we could 
-test if $E[X] = \mu_0$ using an expression such as
+test if $\E[X] = \mu_0$ using an expression such as
 \[
 t_n = \frac{\overline{X}_n - \mu_0}{\sigma/\sqrt{n}}.
 \]
-If we know $\sigma$, then $t_n$ would be normally distributed $N(0,1)$ under $H_0\!: E[X]=\mu_0$. 
+If we know $\sigma$, then $t_n$ would be normally distributed $N(0,1)$ under $H_0\!: \E[X]=\mu_0$. 
 This would be true even in small samples.
 We can modify this most simple $t$-test in various ways.
 
@@ -595,8 +595,8 @@ are constants.
 \item $\E[a X + b Y] = a\E[X] + b\E[Y]$.
 \item $\E[g(X)] = \int g(x) f_{\!X}(x) \rd x$ when the density exists.
 \item $\E[XY] = \E[X]\E[Y]$ when $X$ and $Y$ are independent.
-\item $\E[|X+Y|] \leq \E[|X|] + E[|Y|]$.
-\item $\var[X] = \E[X^2] - \left(E[X]\right)^2$.
+\item $\E[|X+Y|] \leq \E[|X|] + \E[|Y|]$.
+\item $\var[X] = \E[X^2] - \left(\E[X]\right)^2$.
 \item $\var[\overline{X}_n] = \var[X] / n$. 
 \item $\cov[X,Y] = \E[XY] - \E[X]\E[Y]$.
 \item $\cov[X,X] = \var[X]$.
