@@ -63,9 +63,9 @@ to.
 
 The set of possible events must be restricted to a
 $\mathbf{\sigma}$\textbf{-algebra} $\calA$, a class of subsets of $\calS$. We
-require that if $A\in\calS$ then $A^c\in\calA$; if $A\in\calA$ and $B\in\calA$
+require that if $A\in\calA$ then $A^c\in\calA$; if $A\in\calA$ and $B\in\calA$
 then $A\cup B$ is also in $\calA$. This defines an \textbf{algebra}. We also
-require that taking  if $A_1,A_2,\dots\in \calA$, then $\cup_{i=1}^\infty A_i
+require that if $A_1,A_2,\dots\in \calA$, then $\cup_{i=1}^\infty A_i
 \in \calA$, this last requirement is what restricts $\calA$ to a
 $\sigma$-algebra. Some authors use the term $\sigma$-\emph{field} to refer to a $\sigma$-algebra.
 
@@ -80,7 +80,7 @@ the relevant $\sigma$-algebra. The set of all subsets is also referred to as the
 \textbf{power set} and written $2^\calS$. If the sample space is continuous
 (like the set of all real numbers), there are technical difficulties working
 with the power set; the power set of $\SR$ is not a $\sigma$-algebra. Instead,
-for real numbers we work with subsets that are open intervals, $\calB = \{(a,b),
+for real numbers we work with subsets that are open intervals, $\calB = \{(a,b):
 \ a,b\in\SR\}$. Using all sets of type $\calB$, and the countable unions and
 complements of these sets, we can define the \textbf{Borel $\sigma$-algebra}.
 
@@ -92,9 +92,11 @@ as
 
 If $A$ and $B$ are events with positive probability, $A$ and $B$ are \textbf{independent} if
 $P(A\cap B) = P(A)\cdot P(B)$, $P(A|B)=P(A)$, and $P(B|A)=P(B)$, these are equivalent
-conditions. Independence
-is symmetric but not transitive: If $A$ and $B$ are independent and $B$ and $C$ are independent,
-it does not follow that $A$ and $C$ are independent.
+conditions. 
+
+Independence is symmetric but not transitive: If $A$ and $B$ are independent and
+$B$ and $C$ are independent, it does not follow that $A$ and $C$ are
+independent.
 
 \section{Random variables}
 
