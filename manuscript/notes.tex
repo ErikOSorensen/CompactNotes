@@ -3,7 +3,7 @@
 \usepackage{geometry}
 \geometry{paperwidth=105mm,paperheight=148.5mm,margin=9mm,includeheadfoot}
 \usepackage{graphicx}
-\usepackage{stix2}
+\usepackage{stix}
 \usepackage{url}
 \usepackage{natbib}
 \usepackage{booktabs}
@@ -12,6 +12,7 @@
 \title{Compact notes on \\ probability and statistics}
 \author{Erik Ø. Sørensen\thanks{FAIR, Department of Economics, NHH Norwegian
 School of Economics. \texttt{erik.sorensen@nhh.no}}}
+\date{2nd edition, 2024}
 
 \input{commands.tex}
 
@@ -54,20 +55,19 @@ data wrangling for applied work).
 
 
 \section{Probability}
-Probability theory is defined in terms of set theoretic
-notions. 
-Let us define a \textbf{sample space} of all possible outcome of some
-event (a set). Example, role of a die: $\calS =\{1,2,3,4,5,6\}$. 
-An \textbf{event} is a subset of $\calS$. Events are what we assign probability
-to.
 
-The set of possible events must be restricted to a
-$\mathbf{\sigma}$\textbf{-algebra} $\calA$, a class of subsets of $\calS$. We
-require that if $A\in\calA$ then $A^c\in\calA$; if $A\in\calA$ and $B\in\calA$
+Probability theory is defined in terms of set theoretic notions. Let us define a
+\textbf{sample space} of all possible outcome of some event (a set). Example,
+role of a die: $\calS =\{1,2,3,4,5,6\}$. We assign probability to
+\textbf{events}, subset of $\calS$. The set of events that we can assign
+probabilities to is called a $\mathbf{\sigma}$\textbf{-algebra}.
+
+A $\sigma$-algebra $\calA$, is a class of subsets of $\calS$. We
+require that (i) if $A\in\calA$ then $A^c\in\calA$; (ii) if $A\in\calA$ and $B\in\calA$
 then $A\cup B$ is also in $\calA$. This defines an \textbf{algebra}. We also
-require that if $A_1,A_2,\dots\in \calA$, then $\cup_{i=1}^\infty A_i
+require that (iii) if $A_1,A_2,\dots\in \calA$, then $\cup_{i=1}^\infty A_i
 \in \calA$, this last requirement is what restricts $\calA$ to a
-$\sigma$-algebra. Some authors use the term $\sigma$-\emph{field} to refer to a $\sigma$-algebra.
+$\sigma$-algebra.\footnote{Some authors use the term $\sigma$-\emph{field} to refer to a $\sigma$-algebra.}
 
 A function $P\!\!:\calA \rightarrow \SR$ is a \textbf{probability set function}  if $P(A)\geq0$ for
 all $A\in\calA$; $P(\emptyset)=0$; $P(\calS)=1$; and if $A_1,A_2,\dots$ is a
@@ -76,7 +76,7 @@ $P(\cup_{i=1}^\infty A_i)=\sum_{i=1}^\infty P(A_i)$. The triple
 $(\calS,\calA,P)$ is called a \textbf{probability space}.
 
 With a discrete sample space, we will often work with the set of all subsets as
-the relevant $\sigma$-algebra. The set of all subsets is also referred to as the
+the relevant $\sigma$-algebra. The set of all subsets is sometimes referred to as the
 \textbf{power set} and written $2^\calS$. If the sample space is continuous
 (like the set of all real numbers), there are technical difficulties working
 with the power set; the power set of $\SR$ is not a $\sigma$-algebra. Instead,
@@ -91,9 +91,8 @@ as
 \[ P(B|A) = \frac{ P(A|B)\cdot P(B)}{P(A)}.\]
 
 If $A$ and $B$ are events with positive probability, $A$ and $B$ are \textbf{independent} if
-$P(A\cap B) = P(A)\cdot P(B)$, $P(A|B)=P(A)$, and $P(B|A)=P(B)$, these are equivalent
+and only if $P(A\cap B) = P(A)\cdot P(B)$, $P(A|B)=P(A)$, and $P(B|A)=P(B)$. These are equivalent
 conditions. 
-
 Independence is symmetric but not transitive: If $A$ and $B$ are independent and
 $B$ and $C$ are independent, it does not follow that $A$ and $C$ are
 independent.
@@ -102,23 +101,21 @@ independent.
 
 A \textbf{random variable}  (r.v.) is a function from a sample space to the real numbers,
 $X\!\!: \calS \rightarrow \calS_X$, with $\calS_X\subset \SR$. There are technical requirements:
-$X$ must be \textbf{measurable},
+$X$ must be \textbf{measurable}:
 \[ \calA_X = \{A\subset S: X(A) \in \calB\} = \{X^{-1}(B): B\in \calB\}\subseteq \calA.\]
-Here $\calB$ is a $\sigma$-algebra on $\calS_X\subset\SR$ and $\calA$ is the $\sigma$-algebra on $\calS$.
+Here $\calB$ is a $\sigma$-alg\-ebra on $\calS_X\subset\SR$ and $\calA$ is the $\sigma$-alge\-bra on $\calS$.
 Now the probability measure $P_X$ is defined $P_X(B) = P(X^{-1}(B))$, and we have mapped
 the probability space $(\calS,\calA,P)$ to the probability space $(\calS_X,\calB,P_X)$.
 
-
-
-It is customary to use capital roman letters to refer to random variables, but
+It is customary to use capital roman letters to refer to random variables and
 lower case letters to refer to particular values (numbers), such that $X(s)=x$
-is the statement that at $s\in\calS$, the random variable $X$ (a function) takes on the value $x$ (a number,
-$x\in\SR$).
+is the statement that at the point $s(\in\calS)$, the random variable $X$ 
+(a function) takes on the value $x$ (a number, $x\in\SR$).
 
 \subsection{Distribution}
 A random variable $X$ is said to have a \textbf{distribution function} (d.f.) $F_X$
 such that \[ F_X(s) = P_X((-\infty, s])=P(\{a: X(a)\leq s\}).\] When the derivative of the
-distribution function exists, it is called the \textbf{density} (pdf) of $X$, written
+distribution function exists of the r.v. $X$, it is called the \textbf{density} (pdf) of $X$, written
 $f_{\!X}(s)=F'_X(s)$. We then say $X$ is distributed \textbf{continuously}. General
 properties: $f_{\!X}(s)\geq0$, $\int_a^b f_{\!X}(s)\rd s = P(X\in[a,b])$, and
 $\int_{-\infty}^\infty f_{\!X}(s) \rd s = 1$. When it is clear from the context, we drop the
@@ -143,7 +140,7 @@ $\E[Y]=\sum_y yp_Y(y)$.
 Having different expressions for discrete and continuous random variables is awkward, since
 sometimes we need to do theory for mixed variables or variables where we don't know the 
 distribution. To find a more general way to express expectations, we need to extend
-our notion of \emph{integration}, this is outside the scope of our method camp. But we sometimes
+our notion of \emph{integration}, this is outside the scope of the method camp. But we sometimes
 see expressions such at $\E[X]=\int\! x \rd F_X(x)$
 or even $\E[X]=\int_\Omega X(\omega) P(\rd \omega)$.
 
@@ -151,8 +148,8 @@ The $k$-th \textbf{moment} of $X$ is $\E [X^k]$ (when it exists).  We often writ
 $\sigma^2 = \E[(X-\mu)^2]$ (the \textbf{variance}). The $k$-th \textbf{central moment} 
 is $\E [ (X-\mu)^k]$.
 
-The function expectation $m_X(t)=\E[\exp(tX)]$ is called the \textbf{moment
-generating function} (mgf) when it exists (finite) in an open ball around zero. When the mgf exists,
+The expectation $m_X(t)=\E[\exp(tX)]$ is called the \textbf{moment
+generating function} (mgf) when it exists (is finite) in an open ball around zero. When the mgf exists,
 $m'(0)=\E[X]$, $m''(0)=\E[X^2]$ and $m^k(0)=\E[X^k]$, and the moment generating function completely
 characterizes the distribution of $X$. For a number of interesting distributions the moment generating
 functions does not exist (example: log-normal distribution). Even when the moment generating function
@@ -167,11 +164,11 @@ Suppose that $\E[X^m]$ exists. If $k$ is a positive integer and $k < m$, then
 $\E[X^k]$ exists.
 \item Let $u(X)$ be a nonnegative function of the random variable $X$. If
 $\E[u(X)]$ exists, then for every positive constant $c$,
-$P(u(X)\geq c) \leq \E[u(X)]/c$ (\textbf{Markov}).
+\[P(u(X)\geq c) \leq \E[u(X)]/c\] (\textbf{Markov}).
 \item Let the random variable $X$ have a distribution with
 finite variance $\sigma^2$. Then for every $k>0$, 
-$P(|X-\mu|\geq k\sigma) \leq 1/k^2$ (\textbf{Chebyshev}).
-\item If $\phi$ is convex on an open interval $I$ and $X$ is a random variable
+\[P(|X-\mu|\geq k\sigma) \leq 1/k^2\] (\textbf{Chebyshev}).
+\item If $\phi$ is convex on an open interval $I$m and $X$ is a random variable
 with finite expectation and support in $I$,
 then $ \phi(\E[X]) \leq \E[\phi(X)]$ (\textbf{Jensen}).
 \end{enumerate}
@@ -191,9 +188,10 @@ standard normal distribution is \textbf{symmetric} around zero, $\Phi(s)=1-\Phi(
 has density $f(x)=\lambda \exp(-\lambda  x)$ on $[0,\infty)$, and distribution function $F(x)=1- \exp(-\lambda x)$.
 The expectation is $1/\lambda$ and the variance is $1/\lambda^2$.
 \item[Binomial] If an event happens with probability $p$ in a single (binary)
-Bernoulli trial, the distribution of the number of events $k$ in $n$ trials has
+trial, the distribution of the number of events $k$ in $n$ trials has
 probability mass function $p(k) = \binom{n}{k} p^k (1-p)^{n-k}$ (with the
-binomial coefficient $\binom{n}{k} = n!/k!(n-k)!$). The expectation is $n p$ and the variance is $n p(1-p)$.
+binomial coefficient $\binom{n}{k} = n!/k!(n-k)!$). The expectation is $n p$ and the variance is $n p(1-p)$. The special case $n=1$ is
+very interesting (\textbf{Bernoulli}).
 \item[Poisson] A Poisson distribution on the integers $\{0,1,2,\dots\}$ has probability mass function 
 $p(x) = \lambda^x \exp(-\lambda)/x!$, the distribution function is not pretty. The moment generating function
 is $m(t) = \exp(\lambda( \exp(t) -1))$. The expectation is $\lambda$ and the variance is $\lambda$.
