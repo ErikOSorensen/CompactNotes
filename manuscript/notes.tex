@@ -113,9 +113,9 @@ is the statement that at the point $s(\in\calS)$, the random variable $X$
 (a function) takes on the value $x$ (a number, $x\in\SR$).
 
 \subsection{Distribution}
-A random variable $X$ is said to have a \textbf{distribution function} (d.f.) $F_X$
+A random variable $X$ has a \textbf{distribution function} (d.f.) $F_X$
 such that \[ F_X(s) = P_X((-\infty, s])=P(\{a: X(a)\leq s\}).\] When the derivative of the
-distribution function exists of the r.v. $X$, it is called the \textbf{density} (pdf) of $X$, written
+distribution functionfor $X$ exists, it is called the \textbf{density} (pdf) of $X$, written
 $f_{\!X}(s)=F'_X(s)$. We then say $X$ is distributed \textbf{continuously}. General
 properties: $f_{\!X}(s)\geq0$, $\int_a^b f_{\!X}(s)\rd s = P(X\in[a,b])$, and
 $\int_{-\infty}^\infty f_{\!X}(s) \rd s = 1$. When it is clear from the context, we drop the
@@ -138,8 +138,8 @@ the expectation always exists.
 If $Y$ is a discrete random variable with pmf $p_Y$, 
 $\E[Y]=\sum_y yp_Y(y)$. 
 Having different expressions for discrete and continuous random variables is awkward, since
-sometimes we need to do theory for mixed variables or variables where we don't know the 
-distribution. To find a more general way to express expectations, we need to extend
+sometimes we need to develop theory for mixed variables or variables for which we don't know the 
+distribution. To find a more general way to express expectations, we would need to extend
 our notion of \emph{integration}, this is outside the scope of the method camp. But we sometimes
 see expressions such at $\E[X]=\int\! x \rd F_X(x)$
 or even $\E[X]=\int_\Omega X(\omega) P(\rd \omega)$.
@@ -174,7 +174,7 @@ then $ \phi(\E[X]) \leq \E[\phi(X)]$ (\textbf{Jensen}).
 \end{enumerate}
 
 \subsection{Common distributions}
-There are some distributions that are nice to recognize:
+There are some distributions that we should recognize:
 
 \begin{description}
 \item[Uniform] A uniform distribution on $[a,b]$ is written $U(a,b)$, has a density $1/(b-a)$ on $[a,b]$ and 
@@ -191,13 +191,13 @@ The expectation is $1/\lambda$ and the variance is $1/\lambda^2$.
 trial, the distribution of the number of events $k$ in $n$ trials has
 probability mass function $p(k) = \binom{n}{k} p^k (1-p)^{n-k}$ (with the
 binomial coefficient $\binom{n}{k} = n!/k!(n-k)!$). The expectation is $n p$ and the variance is $n p(1-p)$. The special case $n=1$ is
-very interesting (\textbf{Bernoulli}).
+often very useful (\textbf{Bernoulli}).
 \item[Poisson] A Poisson distribution on the integers $\{0,1,2,\dots\}$ has probability mass function 
 $p(x) = \lambda^x \exp(-\lambda)/x!$, the distribution function is not pretty. The moment generating function
 is $m(t) = \exp(\lambda( \exp(t) -1))$. The expectation is $\lambda$ and the variance is $\lambda$.
 \end{description}
 
-A more complete overview of distributions is given by \citet{Leemis2008}. There are also multi-volume
+\noindent A more complete overview of distributions is given by \citet{Leemis2008}. There are also multi-volume
 handbooks written with properties of various distributions. 
 
 \subsection{Functions of random variables}
@@ -206,9 +206,9 @@ If $X$ is a random variable and $g$ is a function, $Y=g(X)$ is another random va
 In Figure~\ref{fig:frv}a, $Y=g(X)$ is an increasing function (one-to-one). 
 Considering the distribution of $Y$, 
 the distribution function for $Y$ is $F_Y(y) = P(Y\leq y)$. We can substitute
-the definition of $Y$ into this: $F_Y(y) = P(g(X)\leq y)$, where this
-substitution depends on $g$ being increasing. Continuing
-the substitutions, $P(g(X) \leq y) = P( g^{-1}(g(X)) \leq g^{-1}(y)) = P(X\leq g^{-1}(y))$,
+the definition of $Y$ into this: $F_Y(y) = P(g(X)\leq y)$. We can now
+apply the inverse of $g$ on both sides of of the inequality in $P$,
+relying on $g$ being increasing: $P(g(X) \leq y) = P( g^{-1}(g(X)) \leq g^{-1}(y)) = P(X\leq g^{-1}(y))$,
 and we can conclude that $F_Y(y)= F_X(g^{-1}(y))$. The density follows by differentiation, 
 $f_Y(y) = f_X(g^{-1}(y)) \rd g^{-1}(y)/\rd y$.
 
@@ -271,10 +271,10 @@ of defining conditional probability into the theory of integration.
 Let $(X_1,X_2)$ have a joint distribution function 
 $F(x_1,x_2)$ and let $X_1$ and $X_2$ have marginal distribution functions $F_1(x_1)$
 and $F_2(x_2)$. Then $X_1$ and $X_2$ are \textbf{independent} if and only if 
-\[F(x_1,x_2)= F_1(x_1) F_2(x_2),\]
-the joint d.f. being the product of marginal d.f.s. It follows that if the corresponding
-densities exist, $X_1$ and $X_2$ are independent if the joint
-density is the product of marginal densities.
+\[F(x_1,x_2)= F_1(x_1) F_2(x_2),\] the joint distribution function being the
+product of marginal distribution functions. It follows that if the corresponding
+densities exist, $X_1$ and $X_2$ are independent if the joint density is the
+product of marginal densities.
 
 If $X_1$ and $X_2$ are independent and $\E[u(X_1)]$ and $\E[v(X_2)]$ exist, then it 
 is the case that $\E[u(X_1)v(X_2)] = \E[u(X_1)]\cdot \E[v(X_2)]$.
@@ -325,23 +325,25 @@ the \textbf{estimator}.  The parameter we aim to estimate is called the \textbf{
 
 Similarly, for a simple regression model,
 \[ Y_i = \alpha + \beta X_i + \varepsilon_i,\] the core assumption is often that $\cov[\varepsilon_i,X_i]=0$.
-Reformulating, $\cov[Y_i - (\alpha + \beta X_i), X_i]$, or $\cov[Y_i,X_i] = \beta \var[X_i]$.
+Reformulating, $\cov[Y_i - (\alpha + \beta X_i), X_i]=0$, or $\cov[Y_i,X_i] = \beta \var[X_i]$.
 The empirical analog of this is 
 \[ \widehat{\cov[X_i,Y_i]} = \widehat{\beta} \widehat{\var[X_i]}.\]
 This equation
 is easily solved for $\widehat{\beta} = \widehat{\cov[X_i,Y_i]} / \widehat{\var[X_i]}$.  To find
 $\widehat{\alpha}$ use the same kind of procedure for the theoretical moment $\E[\varepsilon_i]=0$. This kind
 of application of the analog principle is called \textbf{method of moments}. Note
-that in this regression case, the assumption $\cov[Y_i - (\alpha + \beta X_i), X_i]$ is equivalent
+that in this regression case, the assumption $\cov[Y_i - (\alpha + \beta X_i), X_i]=0$ is equivalent
 to the expected first order condition of a least-square minimization.
 
-Often what seems like different approaches end up as equivalent to method of moment estimation.
-An example: With \textbf{maximum likelihood}, under some regularity assumptions maximum likelihood 
-estimation is equivalent to method of moments with the additional result that the expectation 
-of the \textbf{score}, the first order condition of the log likelihood, is zero. But in general,
-maximum likelihood is based on maximizing the probability (or density) of the data $L(\mX;\theta)$ 
-given the parameters $\widehat{\theta}$. Most of the time, we prefer to maximize the log likelihood,
-which for an iid sample is just the sum of individual log likelihoods.
+Often what seems like different approaches end up as equivalent to method of
+moment estimation. An example: With \textbf{maximum likelihood}, under some
+regularity assumptions maximum likelihood estimation is equivalent to method of
+moments with the additional result that the expectation of the \textbf{score},
+the first order condition of the log likelihood, is zero. But in general,
+maximum likelihood is based on maximizing (with respect to the parameters
+$\theta$) the probability (or density) of the data, $L(\mX;\theta)$, given the
+data $\mX$. Most of the time, we prefer to maximize the log likelihood, which
+for an iid sample is just the sum of individual log likelihoods.
 
 In most of applied economics, we think of the parameters we want to estimate as properties
 of some \textbf{data generating process} that potentially can generate infinitely many realizations and
@@ -481,7 +483,7 @@ $\plim X_n = X$, or that $X_n \xrightarrow{P} X$.
 \begin{theorem}
 Let $\{X_n\}$ be sequence of iid random variables with common mean $\mu$ and
 finite variance $\sigma^2$. If $\overline{X}_n = n^{-1}\sum_{i=1}^n X_i$, then
-$\plim \overline{X}_n=\mu$. (Weak law of large numbers)
+$\plim \overline{X}_n=\mu$. (Weak law of large numbers.)
 \end{theorem}
 
 There are a number of results about how probability limits work:
@@ -545,7 +547,7 @@ and $g'(\theta)\neq 0$, then
 \[ \sqrt{n}\left(g(X_n) - g(\theta)\right) \xrightarrow{D} 
 N\left(0, \left(g'(\theta)\right)^2\sigma^2\right).\]
 \end{theorem}
-This can be proven with a Taylor expansion. 
+This can also be proven with a Taylor approximation. 
 
 The $\Delta$-rule is the default approach to calculating the distribution of derived
 statistics. If we can show that the CLT applies to some moments or parameters,
@@ -553,7 +555,7 @@ and we are interested in a function of these moments or parameters, we can use t
 $\Delta$-rule to calculate the distribution of these functions. Statistical packages
 will often do this automatically (example: Stata's \texttt{testnl} command).
 
-\section{Selected math facts}
+\section{Selected maths facts}
 In this section, there are some mathematical facts that turn out to be useful
 for probability and statistics but are not part of statistics itself.
 
