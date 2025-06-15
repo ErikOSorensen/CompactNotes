@@ -6,13 +6,13 @@
 \usepackage{stix}
 \usepackage{url}
 \usepackage{natbib}
-\usepackage{booktabs}
+\usepackage{booktabs,microtype}
 %\pagestyle{empty}\thispagestyle{empty}
 
 \title{Compact notes on \\ probability and statistics}
 \author{Erik Ø. Sørensen\thanks{FAIR, Department of Economics, NHH Norwegian
 School of Economics. \texttt{erik.sorensen@nhh.no}}}
-\date{2nd edition, 2024}
+\date{3rd edition, 2025}
 
 \input{commands.tex}
 
@@ -34,35 +34,40 @@ please register an issue or a pull request at \url{https://github.com/ErikOSoren
 %\clearpage
 \thispagestyle{empty}
 \newpage
-\noindent This set of compact notes is written to support the August method camp
-in probability and statistics for new PhD students at NHH Norwegian School of
-Economics. The intention is not to replace a proper book on the topic or
-be subject to independent study. 
+\noindent 
+This compact set of notes is designed to support the August Method Camp in
+probability and statistics for incoming PhD students at NHH Norwegian School of
+Economics. It is not intended to replace a comprehensive textbook or serve as a
+resource for independent study.
 
-This set of notes relies a lot on the two books I have used for teaching in the
-last decade: \citet{Hogg2013} is a good  general mathematical statistics
-textbook; \citet{Linton2017} is more compact and specifically aimed at training
-econometricians. When it comes to the statistics part, econometrics textbooks
-will probably be sufficient for almost everyone. For those that need a more
-theoretical grounding to probability theory, a first escalation might be
-\citet{Rosenthal2006}; the level of rigour of \citet{Billingsley1995} should be
-sufficiently high for everyone. For topics in probability and statistics,
-Wikipedia can also be quite good.
+The notes draw heavily on two key references that I have used in teaching over
+the past decade: \citet{Hogg2013}, a solid general textbook in mathematical
+statistics, and \citet{Linton2017}, which is more concise and specifically
+tailored for training econometricians. For the statistics component,
+econometrics textbooks will likely suffice for most students. However, for those
+seeking a deeper theoretical understanding of probability, a good starting point
+is \citet{Rosenthal2006}, while the rigor of \citet{Billingsley1995} should meet
+the needs of any reader.
 
-We will not cover software in the Method Camp, but you can never go wrong by
-having a look at \citet{Wickham2017} and their introduction to modern~R (emphasizing
-data wrangling for applied work).
+Wikipedia can also be a surprisingly helpful resource for topics in probability
+and statistics.
 
+Although we will not cover software during the Method Camp, I recommend
+\citet{Wickham2017} as a strong introduction to modern R, particularly for data
+wrangling in applied settings.
 
 \section{Probability}
 
-Probability theory is defined in terms of set theoretic notions. Let us define a
-\textbf{sample space} of all possible outcome of some event (a set). Example,
-role of a die: $\calS =\{1,2,3,4,5,6\}$. We assign probability to
-\textbf{events}, subset of $\calS$. The set of events that we can assign
-probabilities to is called a $\mathbf{\sigma}$\textbf{-algebra}.
+Probability theory is defined in terms of set theoretic notions. We begin by
+defining a \textbf{sample space}, which is the set of all possible outcome of
+some event. Example, role of a die: $\calS =\{1,2,3,4,5,6\}$. We assign
+probability to \textbf{events}, which are subset of $\calS$. The set of events
+that we can assign probabilities to is called a
+$\mathbf{\sigma}$\textbf{-algebra}, which is a set of subsets of $\calS$ that
+satisfies some properties, ensuring that probability measures are well-defined
+and consistent.
 
-A $\sigma$-algebra $\calA$, is a class of subsets of $\calS$. We
+A $\sigma$-algebra $\calA$, is a class of subsets of $\calS$ with three requirements: We
 require that (i) if $A\in\calA$ then $A^c\in\calA$; (ii) if $A\in\calA$ and $B\in\calA$
 then $A\cup B$ is also in $\calA$. This defines an \textbf{algebra}. We also
 require that (iii) if $A_1,A_2,\dots\in \calA$, then $\cup_{i=1}^\infty A_i
@@ -111,6 +116,14 @@ It is customary to use capital roman letters to refer to random variables and
 lower case letters to refer to particular values (numbers), such that $X(s)=x$
 is the statement that at the point $s(\in\calS)$, the random variable $X$ 
 (a function) takes on the value $x$ (a number, $x\in\SR$).
+
+To recognize the importance of measurability, consider the sample space
+$\calS_e=\{a,b\}$, with the $\sigma$-algebra $\calA_e=\{\emptyset, \calS_e\}$, and
+the function $X_e:\calS_e\rightarrow\SR$, taking values $X_e(a)=0$, $X_e(b)=1$. 
+This cannot be a random variable, since $X_e^{-1}(0)=\{a\}$ and 
+$X_e^{-1}(1)=\{b\}$, and neither $\{a\}$ nor $\{b\}$ are in the $\sigma$-algebra 
+$\calA_e$. Measurability is a requirement on the combination of the function and the
+$\sigma$-algebra.
 
 \subsection{Distribution}
 A random variable $X$ has a \textbf{distribution function} (d.f.) $F_X$
