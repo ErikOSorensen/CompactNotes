@@ -108,14 +108,10 @@ A \textbf{random variable}  (r.v.) is a function from a sample space to the real
 $X\!\!: \calS \rightarrow \calS_X$, with $\calS_X\subset \SR$. There are technical requirements:
 $X$ must be \textbf{measurable}:
 \[ \calA_X = \{A\subset S: X(A) \in \calB\} = \{X^{-1}(B): B\in \calB\}\subseteq \calA.\]
-Here $\calB$ is a $\sigma$-alg\-ebra on $\calS_X\subset\SR$ and $\calA$ is the $\sigma$-alge\-bra on $\calS$.
+Here $\calB$ is a $\sigma$-alg\-ebra on $\calS_X\subset\SR$ and $\calA$ is the $\sigma$-alg\-ebra on $\calS$.
 Now the probability measure $P_X$ is defined $P_X(B) = P(X^{-1}(B))$, and we have mapped
 the probability space $(\calS,\calA,P)$ to the probability space $(\calS_X,\calB,P_X)$.
 
-It is customary to use capital roman letters to refer to random variables and
-lower case letters to refer to particular values (numbers), such that $X(s)=x$
-is the statement that at the point $s(\in\calS)$, the random variable $X$ 
-(a function) takes on the value $x$ (a number, $x\in\SR$).
 
 To recognize the importance of measurability, consider the sample space
 $\calS_e=\{a,b\}$, with the $\sigma$-algebra $\calA_e=\{\emptyset, \calS_e\}$, and
@@ -124,6 +120,11 @@ This cannot be a random variable, since $X_e^{-1}(0)=\{a\}$ and
 $X_e^{-1}(1)=\{b\}$, and neither $\{a\}$ nor $\{b\}$ are in the $\sigma$-algebra 
 $\calA_e$. Measurability is a requirement on the combination of the function and the
 $\sigma$-algebra.
+
+It is customary to use capital roman letters to refer to random variables and
+lower case letters to refer to particular values (numbers), such that $X(s)=x$
+is the statement that at the point $s(\in\calS)$, the random variable $X$ 
+(a function) takes on the value $x$ (a number, $x\in\SR$).
 
 \subsection{Distribution}
 A random variable $X$ has a \textbf{distribution function} (d.f.) $F_X$
@@ -151,8 +152,8 @@ the expectation always exists.
 If $Y$ is a discrete random variable with pmf $p_Y$, 
 $\E[Y]=\sum_y yp_Y(y)$. 
 Having different expressions for discrete and continuous random variables is awkward, since
-sometimes we need to develop theory for mixed variables or variables for which we don't know the 
-distribution. To find a more general way to express expectations, we would need to extend
+sometimes we need to develop theory for mixed variables or variables we don't know the 
+distribution of. To find a more general way to express expectations, we would need to extend
 our notion of \emph{integration}, this is outside the scope of the method camp. But we sometimes
 see expressions such at $\E[X]=\int\! x \rd F_X(x)$
 or even $\E[X]=\int_\Omega X(\omega) P(\rd \omega)$.
